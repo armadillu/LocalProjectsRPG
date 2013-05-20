@@ -1,0 +1,19 @@
+<html>
+	<form action="{{ url_for('showForm') }}" method=post class=add-entry>
+	  <dl>
+		<dt>Title:
+		<dd><input type=text size=30 name=title>
+		<dt>Text:
+		<dd><textarea name=text rows=5 cols=40></textarea>
+		<dd><input type=submit value=Share>
+	  </dl>
+	</form>
+
+  <ul class=entries>
+  {% if result %}
+    <li><h2>{{ result.title }}</h2>{{ result.text|safe }}
+  {% else %}
+    <li><em>No Form data was sent!</em>
+  {% endif %}
+  </ul>
+</html>
