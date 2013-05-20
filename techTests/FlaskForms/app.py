@@ -8,14 +8,11 @@ app = Flask(__name__)
 def showForm():
 	#request.form to access POST DATA!
 	#request.GET to access GET DATA!
-	
-	print request.form;
 	title = request.form.get('title', '')
 	text = request.form.get('text', '')
 	if (title and text):
 		result = { 'title' : title, 'text' : text }
-		print "res:" + str(result)
-		return render_template('form.html', result = result )
+		return render_template('form.html', stuff = result )
 	else:
 		return render_template('form.html')
 
