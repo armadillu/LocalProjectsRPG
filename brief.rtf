@@ -1,0 +1,100 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf370
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww12860\viewh15800\viewkind0
+\deftab720
+\pard\pardeftab720
+
+\f0\fs26 \cf2 Hi Oriol,\
+Following is the code exercise that we give our tech candidates. Please note that the objective here is to understand your process, and not to create a full-fledged working system. I'd also like you to build your solution with iOS as the target. The idea is really to get you to think about a problem in an unfamiliar environment with some degree of vagueness because that's our constant challenge at Local Projects. And this helps me evaluate how you go about solving these problems in a short time.\
+\
+There is no time-limit on the exercise, but please let me know whenever you have the code up to a good enough point that you want me to look at it. I realize that we're all extremely busy, so I don't want to have you spend too much time on the exercise.\
+\
+Please feel free to ask any questions - I'm always available on IM or skype (churchofchai).\
+\
+Best, S.\
+\pard\pardeftab720\sa160
+
+\b\fs48 \cf2 RPG Exercise
+\fs52 \
+\pard\pardeftab720\sa100
+
+\fs38 \cf2 Overview:
+\fs40 \
+\pard\pardeftab720
+
+\b0\fs26 \cf2 \
+The objective is to build an engagement platform through a sort of Role Playing Game (RPG) which asks users to respond to a series of questions which ultimately tie into a set of statistics.\
+\
+1. The user is posed with a A set of sequential questions are asked of the user. Each question's answer is either Yes or No. Depending on the answer, a set of tokens/statistics are affected. For example:\
+\
+Question: Should we build more schools? \'a0Tokens affected:\
+\
+ \'a0\'a0\'a0- income tax: Yes: +5, No: -3 \
+ \'a0\'a0\'a0- education level: Yes: +3, No: -4 \
+ \'a0\'a0\'a0- public health: Yes: +2, No: -5 \
+ \'a0\'a0\'a0- entrepreneurship: Yes: +3, No: -1 \
+ \'a0\'a0\'a0- community art: Yes: -3, No: +4 \
+ \'a0\'a0\'a0- immigration: Yes: 0, No: 0\
+\
+The application should have an administrative interface which allows adding/editing/updating questions \'a0and tokens and their relationships - either in a positive or negative way as described in the points above. \'a0The CMS needs to allow for addition of tokens, questions, and outcomes. So the first task is to build an admin interface that allows for this sort of content to be stored, and adjusted. The back-end of this application should be a set of RESTful resources which allow these CRUD operations.\
+\
+The application can be thought of as a game with different rounds. Each game-round is defined by a set of questions. The number of questions for a game should be configurable. This can be via a static config file, or via an interface - whatever makes more sense to you. I'm interested in your motivations for either decision.\
+\
+The client (front-facing) UI to the game is a visualization of the statistics. The exact visual is left to you, but one possible option is a simple board: Imagine it's like a race of tokens starting at the left edge of the screen and going to the right. So each question affects the N tokens that are displayed, either positively, negatively or not at all. By answering questions either yes or no, the tokens move along the board to the right at different rates.\
+\
+The objective of the game is more of a "What If?" rather than a win/lose scenario. However, there are obviously win/lose scenarios in this for the community that the questions affect (for instance, Quality-of-Life might be the key token that you want winning).\
+\
+Your solution (both front and back-end code) must be committed to a github account - the code will be available under a Public Domain license, so please do not restrict in any way. Send me the github URL for the project once you have something working, and also send me a working URL for the application.\
+\
+Please keep track of your hours. Generally a basic application like this should be possible to build in about a day using existing frameworks and open-source libraries, but obviously that's subjective. I would like to avoid you spending multiple days on this, so if this takes much longer please let me know how far you got. \
+\
+Feel free to ping me if you have any questions about this exercise or if anything is unclear. However, keep in mind that lack of clarity is also often something that we deal with and we're supposed to build better solutions that the client envisioned, which is why they come to us for help.\
+\
+Some of the technical details for implementation follow.\
+\
+\pard\pardeftab720\sa100
+
+\b\fs38 \cf2 Front-end:
+\fs40 \
+\pard\pardeftab720
+
+\b0\fs26 \cf2 The specific design of the UI is left to you. The only requirement is that common design elements and UI functions are required. This means button behavior, swiping, and other touch interfaces should behave as one expects on the target platform.\
+\
+\pard\pardeftab720\sa100
+
+\i\b\fs32 \cf2 For Javascript programmers:
+\i0\fs30 \
+\pard\pardeftab720
+
+\b0\fs26 \cf2 Use any current JS framework. The site must be responsive and you may use any common libraries and blueprints (eg. bootstrap, twitter, etc.).\
+\
+\pard\pardeftab720\sa100
+
+\i\b\fs32 \cf2 For iOS/Android programmers:
+\i0\fs30 \
+\pard\pardeftab720
+
+\b0\fs26 \cf2 You may use any development environment, including cross-platform tools such Appcelerator Titanium. The interface should adhere to common design practices for the target platform, and should provide a smooth user experience. \
+\
+\pard\pardeftab720\sa100
+
+\b\fs38 \cf2 Back-end:
+\fs40 \
+\pard\pardeftab720
+
+\b0\fs26 \cf2 The back-end should be a Python/Flask server. It may alternatively be a node.js or Ruby/Sinatra back-end. It must talk to a MongoDB storage layer, which you may host at MongoHQ. The web-services API that provides the following RESTful resources:\
+\
+GET /api/???\
+PUT /api/???\
+POST /api/???\
+\
+The resource-names for the above are left to your decision, and however it interacts with your front-end.\
+\pard\pardeftab720\sa100
+
+\i\b\fs32 \cf2 Back-end Hosting:
+\i0\fs30 \
+\pard\pardeftab720
+
+\b0\fs26 \cf2 \
+The application may be hosted on any target: your own web server (please let me know what the configuration is, i.e., nginx + supervisor, apache + mod_python, etc.), Google App Engine, Heroku, or whatever else you're comfortable with or want to play with and learn.}
