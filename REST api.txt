@@ -1,0 +1,18 @@
+// PUT ////////////////////////////////////////////////////////
+
+/questions/<string:question> 					> add question
+/tokens/<string:token>							> add token
+
+
+// DELETE ////////////////////////////////////////////////////////
+
+/questions/<string:question> 					> delete question
+/tokens/<string:token>							> delete token
+
+
+// GET ////////////////////////////////////////////////////////
+
+/questions 										> list of all questions
+/tokens											> list of tokens
+/round/<int:roundID>							> roundID:[0..N], retrurns list of questions
+

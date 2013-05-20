@@ -1,0 +1,69 @@
+struct Question{
+	string text;
+}
+
+struct Token{
+	string name;
+}
+
+struct TokenValue{	
+	int positive;
+	int negative;
+}
+
+vector<Token> 				tokens;		// listing of all tokens
+vector<Questions> 			questions;	// listing of all questions
+vector< vector<Questions> > gameRounds;	// clusters of questions, idx is round #
+
+// Dict key is "question", value is another Dict with token and its tokenValues for that question
+// if a questions has a missing token definition, we assume token values to be 0,0
+
+map< string, map<Token,TokenValue> > questionPoints;
+
+
+// json ////////////////////////////////////////////////////////////////////////
+
+
+var questions = [ { question:'question1'}, {question:'question2'}, {question:'question3'} ]; // ???
+
+var tokens = [ {token:'incomeTax'}, {token:'educationLevel'}, {token:'publicHealth'} ];
+
+var questionPoints = 
+[	
+	{ 
+		question: 'question1', 
+		tokenValues:	[ 
+							{ 
+								token: 'incomeTax',
+								values: {yes:0, no:5}
+							},
+							{
+								token: 'educationLevel',
+								values:	{yes:-3, no:2}
+							}, 
+							{
+								token: 'publicHealth',
+								values:	{yes:5, no:-3}
+							}
+						]
+	},
+	{ 
+		question: 'question2', 
+		tokenValues:	[ 
+							{ 
+								token: 'incomeTax',
+								values: {yes:1, no:1}
+							},
+							{
+								token: 'educationLevel',
+								values:	{yes:3, no:2}
+							}, 
+							{
+								token: 'publicHealth',
+								values:	{yes:2, no:0}
+							}
+						]
+	}
+]
+
+
