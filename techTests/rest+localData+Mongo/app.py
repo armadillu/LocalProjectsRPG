@@ -1,5 +1,6 @@
 from flask import Flask
 from flask.ext.restful import reqparse, abort, Api, Resource
+from pymongo import MongoClient
 
 app = Flask(__name__)
 api = Api(app)
@@ -10,49 +11,54 @@ QUESTIONS = [
 	{"questionID" : "question3","question" : "what are we doing here?"}
 ]
 
-
 parser = reqparse.RequestParser()
 parser.add_argument('question', type=str)
 
-## CHECKS #######################################################
+## DB ###################################################################
 
-def abortIfTokenDoesNotExist(tokenID):
-	if (len(dataForTokenID(tokenID))==0):
-		abort(404, message="Token {} doesn't exist".format(tokenID))
+client = MongoClient( 'mongodb://oriol:ferrer@widmore.mongohq.com:10010/localProjectsTest' )
+db = client["localProjectsTest"]
+questionsCol = db['questions'];
+
+def initDB():
+	questionsCol.drop();
+	for row in QUESTIONS:
+		print "inserting into QUESTIONS DB: " + str(row)
+		questionsCol.insert(row);
+
+
+## CHECKS ###############################################################
 
 def abortIfQuestionDoesNotExist(questionID):
 	if len(dataForQuestionID(questionID))==0:
 		abort(404, message="Question {} doesn't exist".format(questionID))
 
-## DATA ACCESS ###################################################
-
+## DATA ACCESS ###########################################################
 
 def dataForQuestionID(questionID):
-	res = [x for x in QUESTIONS if x["questionID"]==questionID]
+	res = questionsCol.find({"questionID":"question1"});
 	return res
 
 def removeFromQuestions(questionID):
 	res = dataForQuestionID(questionID)
 	print "about to delete Question " + str(res)
-	print str(QUESTIONS)
 	for r in res:
-		QUESTIONS.remove(r)
+		questionsCol.remove( {"questionID":"question1"})
 	
 def allQuestions():
-	return QUESTIONS;
+	res = questionsCol.find()	
+	return res;
 
-	
 def addQuestion(args):
-	questionID = 'question'+str( len(QUESTIONS) + 1);
-	if questionID in 
+	numQuestions = questionsCol.count();
+	questionID = 'question' + str( numQuestions + 1);
 	newQ = 	{
 				'question:' : args['question'],
-				'questionID:' : 'question'+str( len(QUESTIONS) + 1)
+				'questionID:' : questionID
 			}
 	print( "adding new Question " + str(newQ) )
-	QUESTIONS.append(newQ)
+	questionsCol.insert(newQ)
 	
-
 ## QUESTIONS ###############################################################
 
 class Question(Resource):
@@ -85,8 +91,7 @@ class QuestionsList(Resource):
 
 api.add_resource(QuestionsList, '/questions')
 api.add_resource(Question, '/questions/<string:questionID>')
-
+initDB() #start with a clean DB 
 
 if __name__ == '__main__':
     app.run(debug=True)
-    
