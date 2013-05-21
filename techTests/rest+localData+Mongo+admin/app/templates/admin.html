@@ -1,0 +1,26 @@
+<!doctype html>
+<title>Admin</title>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+	<div class=page>
+		<h1>Flaskr</h1>
+		<div class=metanav>
+		</div>
+
+		<ul class=entries>
+		{% for q in questions %}
+			<li><h2>{{ q.questionID }}</h2>{{ q.question|safe }}
+		{% else %}
+			<li><em>Unbelievable.  No entries here so far</em>
+		{% endfor %}
+		</ul>
+
+
+		<form action="{{ url_for('adminAddQuestion') }}" method=post class=add-entry>
+			<dl>
+				<dt>Question:
+				<dd><textarea name=question rows=5 cols=40></textarea>
+				<dd><input type=submit value=Share>
+			</dl>
+		</form>
+
+	</div>
