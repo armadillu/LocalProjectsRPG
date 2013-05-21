@@ -30,7 +30,7 @@ def initDB():
 ## CHECKS ###############################################################
 
 def abortIfQuestionDoesNotExist(questionID):
-	if len(dataForQuestionID(questionID))==0:
+	if dataForQuestionID(questionID).count() <= 0:
 		abort(404, message="Question {} doesn't exist".format(questionID))
 
 ## DATA ACCESS ###########################################################
@@ -43,20 +43,23 @@ def removeFromQuestions(questionID):
 	res = dataForQuestionID(questionID)
 	print "about to delete Question " + str(res)
 	for r in res:
-		questionsCol.remove( {"questionID":"question1"})
+		questionsCol.remove( {"questionID":questionID} )
 	
 def allQuestions():
-	res = questionsCol.find()	
-	return res;
+	cursor = questionsCol.find( {},{'questionID':1, 'question':1, "_id":0 } )
+	results = []
+	for question in cursor:
+		results.append(question)
+	return results;
 
 def addQuestion(args):
 	numQuestions = questionsCol.count();
-	questionID = 'question' + str( numQuestions + 1);
+	questionID = 'question' + str( numQuestions + 1); #TODO!
 	newQ = 	{
-				'question:' : args['question'],
-				'questionID:' : questionID
+				'question' : args['question'],
+				'questionID' : questionID
 			}
-	print( "adding new Question " + str(newQ) )
+	print( "adding new Question: " + str(newQ) )
 	questionsCol.insert(newQ)
 	
 ## QUESTIONS ###############################################################
@@ -92,6 +95,8 @@ class QuestionsList(Resource):
 api.add_resource(QuestionsList, '/questions')
 api.add_resource(Question, '/questions/<string:questionID>')
 initDB() #start with a clean DB 
+
+print "\n\n\n\n\n\n"
 
 if __name__ == '__main__':
     app.run(debug=True)
