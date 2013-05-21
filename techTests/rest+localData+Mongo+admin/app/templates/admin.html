@@ -23,7 +23,10 @@
 		<ul class=entries>
 		{% for q in questions %}
 			<div id="{{ q.questionID }}">
-				<li><h2>{{ q.questionID }}</h2>{{ q.question|safe }}<div class=deleteButton onClick="javascript:deleteQuestion('{{ q.questionID }}')">x</div>
+				<li>
+					<h2>{{ q.questionID }} <img class=deleteButton src="{{ url_for('static', filename='delete.png')}}" onClick="javascript:deleteQuestion('{{ q.questionID }}')"></h2>
+					{{ q.question|safe }}
+				</li>
 			</div>
 		{% else %}
 			<li><em>No Questions in the DB! Add Some!</em>

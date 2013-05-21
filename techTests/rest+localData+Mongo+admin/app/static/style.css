@@ -9,7 +9,7 @@ h2              { font-size: 1.2em; }
                   padding: 0.8em; background: white; }
 .entries        { list-style: none; margin: 40px; padding: 0;  }
 .entries li     { margin: 0.8em 1.2em; }
-.entries li h2  { margin-left: -1em; }
+.entries li h2  { margin-left: -1em; background-color: #f5f7f9; padding: 4px; margin-bottom: 5px; }
 
 .add-entry      { font-size: 0.9em; border-top: 1px solid #ccc; }
 .add-entry dl   { font-weight: bold; }
@@ -18,8 +18,8 @@ h2              { font-size: 1.2em; }
 				  padding-bottom: 10px;
 				}
 
-.deleteButton	{  float: right; width:10px; height:10px; background-color:#f55;
-				 cursor: pointer; margin: 2px;}
+.deleteButton	{ float:right; display: block; width:16x; height:16px; 
+				  cursor: pointer; margin:0; padding:0; margin-top: 3px; }
 
 
 .flash          { background: #CEE5F5; padding: 0.5em;
