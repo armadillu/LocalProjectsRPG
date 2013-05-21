@@ -30,14 +30,17 @@ def initDB():
 ## CHECKS ###############################################################
 
 def abortIfQuestionDoesNotExist(questionID):
-	if dataForQuestionID(questionID).count() <= 0:
+	if len(dataForQuestionID(questionID)) <= 0:
 		abort(404, message="Question {} doesn't exist".format(questionID))
 
 ## DATA ACCESS ###########################################################
 
 def dataForQuestionID(questionID):
-	res = questionsCol.find({"questionID":"question1"});
-	return res
+	cursor = questionsCol.find( {"questionID":questionID},{'questionID':1, 'question':1, "_id":0 } )
+	results = []
+	for question in cursor:
+		results.append(question)
+	return results;
 
 def removeFromQuestions(questionID):
 	res = dataForQuestionID(questionID)
@@ -52,42 +55,51 @@ def allQuestions():
 		results.append(question)
 	return results;
 
-def addQuestion(args):
+def addQuestion(questionText):
 	numQuestions = questionsCol.count();
-	questionID = 'question' + str( numQuestions + 1); #TODO!
+	questionID = 'question' + str( numQuestions + 1); #TODO check for dup!
 	newQ = 	{
-				'question' : args['question'],
+				'question' : questionText,
 				'questionID' : questionID
 			}
 	print( "adding new Question: " + str(newQ) )
 	questionsCol.insert(newQ)
+
+def updateQuestion(questionText, questionID):
+	newQ = 	{
+				'question' : questionText,
+				'questionID' : questionID
+			}
+	print( "updating Question: " + str(newQ) )
+	removeFromQuestions(questionID);
+	questionsCol.insert(newQ)
+
 	
 ## QUESTIONS ###############################################################
 
 class Question(Resource):
-    def get(self, questionID):
-        abortIfQuestionDoesNotExist(questionID)
-        return dataForQuestionID(questionID)
+	def get(self, questionID): 								#get a question by its ID
+		abortIfQuestionDoesNotExist(questionID)
+		return dataForQuestionID(questionID)
 
-    def delete(self, questionID):
-        abortIfQuestionDoesNotExist(questionID)
-        removeFromQuestions(questionID)
-        return '', 204
+	def delete(self, questionID): 							#delete a question by its ID
+		abortIfQuestionDoesNotExist(questionID)
+		removeFromQuestions(questionID)
+		return '', 204
 
-    def put(self, questionID):
-        args = parser.parse_args()
-        question = {'question': args['question']}
-        print(question)
-        #TODOS[questionID] = question
-        return question, 201
+	def post(self, questionID): 							#update a particular question by its ID
+		abortIfQuestionDoesNotExist(questionID)
+		args = parser.parse_args()
+		updateQuestion(args['question'], questionID)
+		return dataForQuestionID(questionID), 201
 
 class QuestionsList(Resource):
-    def get(self):
+    def get(self):											#get all questions
         return allQuestions()
 
-    def post(self):
+    def post(self): 										#add a new question
         args = parser.parse_args()
-        addQuestion(args)
+        addQuestion(args['question'])
         return ''
 
 ## setup the API ##################################################
