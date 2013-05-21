@@ -116,6 +116,13 @@ def adminAddQuestion():
 	addQuestion(questionText)
 	return redirect(url_for('admin'))
 
+@app.route('/admin/deleteQuestion', methods=['POST'])
+def adminAddQuestion():
+	questionText = str(request.form['question']);
+	print "admin interface adding question: " + questionText;
+	addQuestion(questionText)
+	return redirect(url_for('admin'))
+
 
 ## setup the API #########################################################
 

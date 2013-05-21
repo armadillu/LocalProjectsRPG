@@ -1,26 +1,43 @@
 <!doctype html>
 <title>Admin</title>
+
+<script src="{{ url_for('static', filename='jquery-1.9.1.min.js') }}"></script>
+
+<script type="text/javascript">
+	function deleteQuestion(questionID){
+		//alert("delete " + questionID);
+		$.ajax({
+			   type: 'DELETE',
+			   url: '/questions/'+questionID
+			   });
+		$('#' + questionID).fadeOut(300, function() { $(this).remove(); });; //remove from dom too
+	}
+</script>
+
+
 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+
 	<div class=page>
-		<h1>Flaskr</h1>
-		<div class=metanav>
-		</div>
+		<h1>RPG Admin</h1>
 
 		<ul class=entries>
 		{% for q in questions %}
-			<li><h2>{{ q.questionID }}</h2>{{ q.question|safe }}
+			<div id="{{ q.questionID }}">
+				<li><h2>{{ q.questionID }}</h2>{{ q.question|safe }}<div class=deleteButton onClick="javascript:deleteQuestion('{{ q.questionID }}')">x</div>
+			</div>
 		{% else %}
-			<li><em>Unbelievable.  No entries here so far</em>
+			<li><em>No Questions in the DB! Add Some!</em>
 		{% endfor %}
 		</ul>
 
+		<div class=myForm>
+			<form action="{{ url_for('adminAddQuestion') }}" method=post class=add-entry>
+				<dl>
+					<dd>Add A New Question:
+					<dd><textarea name=question rows=3 cols=40></textarea>
+					<dd><input type=submit value="Add Question">
+				</dl>
+			</form>
+		</div>
 
-		<form action="{{ url_for('adminAddQuestion') }}" method=post class=add-entry>
-			<dl>
-				<dt>Question:
-				<dd><textarea name=question rows=5 cols=40></textarea>
-				<dd><input type=submit value=Share>
-			</dl>
-		</form>
-
-	</div>
+	</div><!--page-->
