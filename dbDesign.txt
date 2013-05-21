@@ -1,3 +1,5 @@
+// C++ //////////////////////////////////////////////////////////////////////////
+
 struct Question{
 	string text;
 }
@@ -20,50 +22,81 @@ vector< vector<Questions> > gameRounds;	// clusters of questions, idx is round #
 
 map< string, map<Token,TokenValue> > questionPoints;
 
-
 // json ////////////////////////////////////////////////////////////////////////
 
+// questionID will be ("question_" + "_id") 
+// tokenID will be ("token_" + "_id")
+// "_id" being mongoDB objectID
 
-var questions = [ { question:'question1'}, {question:'question2'}, {question:'question3'} ]; // ???
+var questions = 
+[
+	{
+		"questionID" : "question1",
+		"question" : "what are monkeys?"
+	},
+	{
+		"questionID" : "question2",
+		"question" : "what are bananas?"
+	},
+	{
+		"questionID" : "question3",
+		"question" : "what are we doing here?"
+	}
+]
 
-var tokens = [ {token:'incomeTax'}, {token:'educationLevel'}, {token:'publicHealth'} ];
 
-var questionPoints = 
-[	
+var tokens = 
+[
+	{
+		"tokenID" : "token1",
+		"token" : "Income Tax"
+	},
+	{
+		"tokenID" : "token2",
+		"token" : "Education Level"
+	},
+	{
+		"tokenID" : "token3",
+		"token" : "Public Health"	
+	}
+]
+
+
+var questionTokenValues = 
+[
 	{ 
-		question: 'question1', 
+		questionID: 'question1', 
 		tokenValues:	[ 
 							{ 
-								token: 'incomeTax',
+								tokenID: 'token1',
 								values: {yes:0, no:5}
 							},
 							{
-								token: 'educationLevel',
+								tokenID: 'token2',
 								values:	{yes:-3, no:2}
 							}, 
 							{
-								token: 'publicHealth',
+								tokenID: 'token3',
 								values:	{yes:5, no:-3}
 							}
 						]
 	},
 	{ 
-		question: 'question2', 
+		questionID: 'question2', 
 		tokenValues:	[ 
 							{ 
-								token: 'incomeTax',
+								tokenID: 'token1',
 								values: {yes:1, no:1}
 							},
 							{
-								token: 'educationLevel',
+								tokenID: 'token2',
 								values:	{yes:3, no:2}
 							}, 
 							{
-								token: 'publicHealth',
+								tokenID: 'token3',
 								values:	{yes:2, no:0}
 							}
 						]
 	}
 ]
-
 
