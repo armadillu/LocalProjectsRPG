@@ -27,6 +27,13 @@
 		BBB3A66C174D55FA001C78CA /* yesButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB3A66A174D55FA001C78CA /* yesButton@2x.png */; };
 		BBB3A66F174D5824001C78CA /* AppData.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB3A66E174D5824001C78CA /* AppData.m */; };
 		BBB3A671174D5DA5001C78CA /* startButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB3A670174D5DA5001C78CA /* startButton@2x.png */; };
+		BBB3A675174D6D9C001C78CA /* start.wav in Resources */ = {isa = PBXBuildFile; fileRef = BBB3A672174D6D9C001C78CA /* start.wav */; };
+		BBB3A676174D6D9C001C78CA /* no.wav in Resources */ = {isa = PBXBuildFile; fileRef = BBB3A673174D6D9C001C78CA /* no.wav */; };
+		BBB3A677174D6D9C001C78CA /* yes.wav in Resources */ = {isa = PBXBuildFile; fileRef = BBB3A674174D6D9C001C78CA /* yes.wav */; };
+		BBB3A679174D6F11001C78CA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBB3A678174D6F11001C78CA /* AVFoundation.framework */; };
+		BBB3A67B174D75DE001C78CA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBB3A67A174D75DE001C78CA /* QuartzCore.framework */; };
+		BBB3A67E174D7D45001C78CA /* myGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB3A67D174D7D45001C78CA /* myGraphView.m */; };
+		BBB3A680174D7ED9001C78CA /* gradient.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB3A67F174D7ED9001C78CA /* gradient.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +66,14 @@
 		BBB3A66D174D5824001C78CA /* AppData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppData.h; sourceTree = "<group>"; };
 		BBB3A66E174D5824001C78CA /* AppData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppData.m; sourceTree = "<group>"; };
 		BBB3A670174D5DA5001C78CA /* startButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "startButton@2x.png"; sourceTree = "<group>"; };
+		BBB3A672174D6D9C001C78CA /* start.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = start.wav; sourceTree = "<group>"; };
+		BBB3A673174D6D9C001C78CA /* no.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = no.wav; sourceTree = "<group>"; };
+		BBB3A674174D6D9C001C78CA /* yes.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = yes.wav; sourceTree = "<group>"; };
+		BBB3A678174D6F11001C78CA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		BBB3A67A174D75DE001C78CA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		BBB3A67C174D7D45001C78CA /* myGraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = myGraphView.h; sourceTree = "<group>"; };
+		BBB3A67D174D7D45001C78CA /* myGraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = myGraphView.m; sourceTree = "<group>"; };
+		BBB3A67F174D7ED9001C78CA /* gradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gradient.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,9 +81,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBB3A67B174D75DE001C78CA /* QuartzCore.framework in Frameworks */,
 				BBB3A62E174D0466001C78CA /* UIKit.framework in Frameworks */,
 				BBB3A630174D0466001C78CA /* Foundation.framework in Frameworks */,
 				BBB3A632174D0466001C78CA /* CoreGraphics.framework in Frameworks */,
+				BBB3A679174D6F11001C78CA /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +95,7 @@
 		BBB3A621174D0466001C78CA = {
 			isa = PBXGroup;
 			children = (
+				BBB3A67A174D75DE001C78CA /* QuartzCore.framework */,
 				BBB3A633174D0466001C78CA /* iosRPG */,
 				BBB3A62C174D0466001C78CA /* Frameworks */,
 				BBB3A62B174D0466001C78CA /* Products */,
@@ -95,6 +113,7 @@
 		BBB3A62C174D0466001C78CA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BBB3A678174D6F11001C78CA /* AVFoundation.framework */,
 				BBB3A62D174D0466001C78CA /* UIKit.framework */,
 				BBB3A62F174D0466001C78CA /* Foundation.framework */,
 				BBB3A631174D0466001C78CA /* CoreGraphics.framework */,
@@ -117,6 +136,8 @@
 				BBB3A668174D55F1001C78CA /* assets */,
 				BBB3A66D174D5824001C78CA /* AppData.h */,
 				BBB3A66E174D5824001C78CA /* AppData.m */,
+				BBB3A67C174D7D45001C78CA /* myGraphView.h */,
+				BBB3A67D174D7D45001C78CA /* myGraphView.m */,
 			);
 			path = iosRPG;
 			sourceTree = "<group>";
@@ -158,6 +179,10 @@
 		BBB3A668174D55F1001C78CA /* assets */ = {
 			isa = PBXGroup;
 			children = (
+				BBB3A67F174D7ED9001C78CA /* gradient.png */,
+				BBB3A672174D6D9C001C78CA /* start.wav */,
+				BBB3A673174D6D9C001C78CA /* no.wav */,
+				BBB3A674174D6D9C001C78CA /* yes.wav */,
 				BBB3A666174D53C3001C78CA /* CapitaL.otf */,
 				BBB3A670174D5DA5001C78CA /* startButton@2x.png */,
 				BBB3A669174D55FA001C78CA /* noButton@2x.png */,
@@ -228,6 +253,10 @@
 				BBB3A66B174D55FA001C78CA /* noButton@2x.png in Resources */,
 				BBB3A66C174D55FA001C78CA /* yesButton@2x.png in Resources */,
 				BBB3A671174D5DA5001C78CA /* startButton@2x.png in Resources */,
+				BBB3A675174D6D9C001C78CA /* start.wav in Resources */,
+				BBB3A676174D6D9C001C78CA /* no.wav in Resources */,
+				BBB3A677174D6D9C001C78CA /* yes.wav in Resources */,
+				BBB3A680174D7ED9001C78CA /* gradient.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -244,6 +273,7 @@
 				BBB3A64A174D0466001C78CA /* FlipsideViewController.m in Sources */,
 				BBB3A661174D2516001C78CA /* QuestionViewController.m in Sources */,
 				BBB3A66F174D5824001C78CA /* AppData.m in Sources */,
+				BBB3A67E174D7D45001C78CA /* myGraphView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,6 +368,7 @@
 				GCC_PREFIX_HEADER = "iosRPG/iosRPG-Prefix.pch";
 				INFOPLIST_FILE = "iosRPG/iosRPG-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -349,6 +380,7 @@
 				GCC_PREFIX_HEADER = "iosRPG/iosRPG-Prefix.pch";
 				INFOPLIST_FILE = "iosRPG/iosRPG-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

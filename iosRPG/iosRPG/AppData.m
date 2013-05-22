@@ -8,14 +8,45 @@
 
 #import "AppData.h"
 
-static AppData * appdataSingleton = nil;
+static AppData *     appdataSingleton = nil;
 
 @implementation AppData
 
 
--(NSArray *) questionsForRound:(int)round{
+-(id)init {
+	NSURL*      musicFile = [NSURL fileURLWithPath:[[NSBundle mainBundle]
+													pathForResource:@"yes"
+													ofType:@"wav"]];
+	yesSound = [[AVAudioPlayer alloc] initWithContentsOfURL:musicFile error:nil];
+	[yesSound prepareToPlay];
+
+	musicFile = [NSURL fileURLWithPath:[[NSBundle mainBundle]
+										pathForResource:@"no"
+										ofType:@"wav"]];
+	noSound = [[AVAudioPlayer alloc] initWithContentsOfURL:musicFile error:nil];
+	[noSound prepareToPlay];
+
+	musicFile = [NSURL fileURLWithPath:[[NSBundle mainBundle]
+										pathForResource:@"start"
+										ofType:@"wav"]];
+	startSound = [[AVAudioPlayer alloc] initWithContentsOfURL:musicFile error:nil];
+	[startSound prepareToPlay];
+
+	return self;
+}
+
+
+-(NSArray *) questionsForRound:(int)round {
 
 	return [NSArray arrayWithObjects:
+			@"What is the weather like?",
+			@"Should we add more schools?",
+			@"Are monkeys going to take over the world?",
+			@"Are you bored of this yet?",
+			@"What is the weather like?",
+			@"Should we add more schools?",
+			@"Are monkeys going to take over the world?",
+			@"Are you bored of this yet?",
 			@"What is the weather like?",
 			@"Should we add more schools?",
 			@"Are monkeys going to take over the world?",
@@ -25,20 +56,21 @@ static AppData * appdataSingleton = nil;
 }
 
 
--(int) numRounds{
+-(int) numRounds {
 	return 1;
 }
 
 
--(void)startGame{
+-(void)startGame {
 	currentQuestion = 0;
 }
 
--(NSString*) nextQuestion{
 
-	NSArray * quests = [self questionsForRound:0];
+-(NSString*) nextQuestion {
+
+	NSArray *     quests = [self questionsForRound:0];
 	if (currentQuestion < [quests count]) {
-		NSString * q = [quests objectAtIndex:currentQuestion];
+		NSString *     q = [quests objectAtIndex:currentQuestion];
 		currentQuestion++;
 		return q;
 	}else{
@@ -47,23 +79,52 @@ static AppData * appdataSingleton = nil;
 }
 
 
+-(int)numTokens{
+	return 5;
+}
+
+
+-(int)scoreForToken:(int)token{
+	return rand()%10 - 5;
+}
+
+
+/////////////////////////////////////////////////////////////////////////
+// SOUND stuff
+
+
+-(void)PlayYesButtonSound {
+	[yesSound play];
+}
+
+
+-(void)PlayNoButtonSound {
+	[noSound play];
+}
+
+
+-(void)PlayStartButtonSound {
+	[startSound play];
+}
+
 
 ////////////////////////////////////////////////////////////////////////
 // Singleton pattern stuff
 
-+ (AppData*) get{
++ (AppData*) get {
 	if (appdataSingleton == nil) {
 		[[self alloc] init]; // assignment not done here
 	}
-    return appdataSingleton;
+	return appdataSingleton;
 }
 
-+ (id)allocWithZone:(NSZone *)zone{
+
++ (id)allocWithZone:(NSZone *)zone {
 	if (appdataSingleton == nil) {
 		appdataSingleton = [super allocWithZone:zone];
 		return appdataSingleton;  // assignment and return on first allocation
 	}
-    return nil; //on subsequent allocation attempts return nil
+	return nil; //on subsequent allocation attempts return nil
 }
 
 

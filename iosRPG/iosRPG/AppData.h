@@ -7,16 +7,29 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <AVFoundation/AVAudioPlayer.h>
 
 @interface AppData : NSObject{
 
 	int currentQuestion;
+	AVAudioPlayer * yesSound;
+	AVAudioPlayer * noSound;
+	AVAudioPlayer * startSound;
 }
 
 + (AppData*) get;
 
 -(void)startGame;
 -(NSString*) nextQuestion;
+-(void)userAnsweredYes;
+-(void)userAnsweredNo;
+
+-(void)PlayYesButtonSound;
+-(void)PlayNoButtonSound;
+-(void)PlayStartButtonSound;
+
+-(int)numTokens;
+-(int)scoreForToken:(int)token;
 
 
 -(NSArray *) questionsForRound:(int)round;

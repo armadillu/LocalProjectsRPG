@@ -17,9 +17,6 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
 	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 	if (self) {
-		// Custom initialization
-
-		//list all font
 //		for (NSString *family in [UIFont familyNames]) {
 //			NSLog(@"%@", [UIFont fontNamesForFamilyName:family]);
 //		}
@@ -27,7 +24,39 @@
 	return self;
 }
 
+-(void)setupGraphs{
+	NSArray * colors = [NSArray arrayWithObjects:[UIColor redColor], [UIColor greenColor], [UIColor blueColor],
+						[UIColor yellowColor], [UIColor orangeColor], nil];
+
+	layers = [[NSMutableArray alloc] initWithCapacity:6];
+	int n = [[AppData get] numTokens];
+	int y = 20;
+	int h = 15;
+	int spacing = 2;
+	graphics.alpha = 0;
+	for (int i = 0; i < n; i++) {
+		UIColor * col = [colors objectAtIndex:i];
+		CGRect r = CGRectMake(self.view.frame.size.width/2, y, 0, h);
+		myGraphView * view = [[myGraphView alloc] initWithFrame:r];
+		y+= h + spacing;
+		view.backgroundColor = col;
+		[graphics addSubview:view];
+		[layers addObject:view];
+		UILabel * lab = [[UILabel alloc] initWithFrame:CGRectMake(0, -19, 400, 50)];
+		lab.backgroundColor = [UIColor clearColor];
+		lab.font = [UIFont fontWithName:@"Capita-Light" size:13];
+		lab.text = @"token";
+		lab.opaque = false;
+		lab.textColor = [UIColor whiteColor];
+		[view addSubview:lab];
+	}
+}
+
+
 - (void)viewWillAppear:(BOOL)animated;{
+
+	[self setupGraphs];
+
 	UIFont * bigTitle = [UIFont fontWithName:@"Capita-Light" size:30];
 	UIFont * smallFont = [UIFont fontWithName:@"Capita-Light" size:28];
 	[question setFont:bigTitle];
@@ -37,7 +66,6 @@
 
 	[yesButton setTitleEdgeInsets:UIEdgeInsetsMake(0.0, 0.0, 5.0, 0.0)];
 	[noButton setTitleEdgeInsets:UIEdgeInsetsMake(0.0, 0.0, 5.0, 0.0)];
-
 
 	[yesButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 	[noButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -56,21 +84,53 @@
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-int c = 0;
+-(void)updateGraph{
 
-- (IBAction)pressedYES:(id)sender {
-	((UIButton*)sender).highlighted = NO;
+	animating = true;
+	[UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:GRAPH_ANIMATION_DURATION];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+	[UIView setAnimationDelegate:self];
+	[UIView setAnimationDidStopSelector:@selector(graphAnimEnded:finished:context:)];
+	for (myGraphView* view in layers) {
+		CGRect r = view.frame;
+		r.size.width += 10 * [[AppData get] scoreForToken:0];
+		[view setFrame:r];
+	}
+    [UIView commitAnimations];
+
+	[UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:FADE_ANIMATION_DURATION];
+	yesButton.alpha = 0;
+	noButton.alpha = 0;
+	graphics.alpha = 1;
+    [UIView commitAnimations];
+
+}
+
+-(void)graphAnimEnded:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context{
+	//finally flip and show new question
 	//give button time to update its view
 	[self performSelector:@selector(showQuestion) withObject:nil afterDelay:0.0];
-	c++;
+
+}
+
+
+- (IBAction)pressedYES:(id)sender {
+	if (!animating){
+		((UIButton*)sender).highlighted = NO;
+		[[AppData get] PlayYesButtonSound];
+		[self updateGraph];
+	}
 }
 
 
 - (IBAction)pressedNO:(id)sender {
-	((UIButton*)sender).highlighted = NO;
-	//give button time to update its view
-	[self performSelector:@selector(showQuestion) withObject:nil afterDelay:0.0];
-	c++;
+	if (!animating){
+		((UIButton*)sender).highlighted = NO;
+		[[AppData get] PlayNoButtonSound];
+		[self updateGraph];
+	}
 }
 
 
@@ -92,10 +152,27 @@ int c = 0;
 					}
 					completion:^(BOOL finished){
 						if(roundOver){
+							[UIView beginAnimations:nil context:nil];
+							[UIView setAnimationDuration:GRAPH_ANIMATION_DURATION];
+							[UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+							graphics.alpha = 0;
+							[UIView commitAnimations];
 							[self.delegate performSelector:@selector(questionViewControllerDidFinish:) withObject:self afterDelay:1.0];
-							//[self.delegate questionViewControllerDidFinish:self]; //finish round!
+						}else{
+							[UIView beginAnimations:nil context:nil];
+							[UIView setAnimationDuration:BUTTON_FADE_ANIMATION_DURATION];
+							yesButton.alpha = 1;
+							noButton.alpha = 1;
+							//graphics.alpha = 0;
+							[UIView setAnimationDelegate:self];
+							[UIView setAnimationDidStopSelector:@selector(buttonAnimEnded:finished:context:)];
+							[UIView commitAnimations];
 						}
 					}];
+}
+
+-(void)buttonAnimEnded:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context{
+	animating = false;
 }
 
 
@@ -107,16 +184,8 @@ int c = 0;
 /////////////////////////////////////////////////////////////////////////////////////
 
 
-- (void)viewDidLoad {
-	[super viewDidLoad];
-	// Do any additional setup after loading the view from its nib.
-}
-
-
 - (void)didReceiveMemoryWarning {
 	[super didReceiveMemoryWarning];
-	// Dispose of any resources that can be recreated.
 }
-
 
 @end

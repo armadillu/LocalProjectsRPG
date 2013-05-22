@@ -14,7 +14,8 @@
 #import "AppData.h"
 
 
-@interface MainViewController : UIViewController <FlipsideViewControllerDelegate, QuestionViewControllerDelegate>{
+@interface MainViewController : UIViewController
+<FlipsideViewControllerDelegate, QuestionViewControllerDelegate>{
 
 	IBOutlet UIButton * startButton;
 	IBOutlet UILabel * titleLabel;

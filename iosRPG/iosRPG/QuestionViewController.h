@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "AppData.h"
+#import <CoreGraphics/CoreGraphics.h>
+#import <QuartzCore/QuartzCore.h>
+#import "Constants.h"
+#import "myGraphView.h"
 
 //////////////////////////////////////////////////
 // define protocol for delegate
@@ -28,8 +32,11 @@
 	IBOutlet UIButton *			yesButton;
 	IBOutlet UIButton *			noButton;
 	IBOutlet UIView	*			wrapper;
+	IBOutlet UIView	*			graphics;
 
 	BOOL	roundOver;
+	NSMutableArray * layers;
+	bool animating;
 }
 
 @property (assign, nonatomic) id <QuestionViewControllerDelegate>                    delegate;
