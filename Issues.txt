@@ -1,0 +1,5 @@
+To Do's / fix
+
+-MongoClient seems to time out sometimes, see how to efficiently keep alive or re-connect when down
+-error checking! 
+-admin silently fails if no backend available

@@ -65,6 +65,7 @@ def addQuestion(questionText):
 			}
 	print( "adding new Question: " + str(newQ) )
 	questionsCol.insert(newQ)
+	return questionID;
 
 def updateQuestion(questionText, questionID):
 	newQ = 	{
@@ -99,30 +100,22 @@ class QuestionsList(Resource):
         return allQuestions()
 
     def post(self): 										#add a new question
-        args = parser.parse_args()
-        addQuestion(args['question'])
-        return ''
+		args = parser.parse_args()
+		question = args['question'];
+		qID = addQuestion(question)
+		return [{"questionID" : qID , "question" : question }]; #return the question ID
 
 ## ADMIN #################################################################
 
+
+@app.route('/')
+def siteRoot():
+	return redirect(url_for('admin'))
+
+@app.route('/admin')
 @app.route('/admin/')
 def admin():
-	questions = allQuestions();
-	return render_template('admin.html', questions=questions)
-
-@app.route('/admin/addQuestion', methods=['POST'])
-def adminAddQuestion():
-	questionText = str(request.form['question']);
-	print "admin interface adding question: " + questionText;
-	addQuestion(questionText)
-	return redirect(url_for('admin'))
-
-@app.route('/admin/deleteQuestion', methods=['POST'])
-def adminAddQuestion():
-	questionText = str(request.form['question']);
-	print "admin interface adding question: " + questionText;
-	addQuestion(questionText)
-	return redirect(url_for('admin'))
+	return render_template('admin.html')
 
 
 ## setup the API #########################################################

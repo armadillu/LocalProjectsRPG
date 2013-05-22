@@ -11,6 +11,11 @@
 	>> list of tokens
 	>> $ curl http://localhost:5000/tokens
 	
+/rounds
+
+	>> list of rounds
+	>> $ curl http://localhost:5000/rounds
+
 /round/roundID
 
 	>> roundID:[0..N], returns list of questions for that round
