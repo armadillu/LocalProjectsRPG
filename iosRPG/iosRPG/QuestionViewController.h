@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AppData.h"
 
 //////////////////////////////////////////////////
 // define protocol for delegate
 //////////////////////////////////////////////////
-@class QuestionViewController;
+@class                    QuestionViewController;
 
 @protocol QuestionViewControllerDelegate
 - (void)questionViewControllerDidFinish:(QuestionViewController *)controller;
@@ -21,15 +22,17 @@
 //////////////////////////////////////////////////
 // actual class definition
 //////////////////////////////////////////////////
-@interface QuestionViewController : UIViewController{
+@interface QuestionViewController : UIViewController {
 
-	IBOutlet UILabel *						question;
-	IBOutlet UIButton *						yesButton;
-	IBOutlet UIButton *						noButton;
-	IBOutlet UIView *						wrapper;
+	IBOutlet UILabel *			question;
+	IBOutlet UIButton *			yesButton;
+	IBOutlet UIButton *			noButton;
+	IBOutlet UIView	*			wrapper;
+
+	BOOL	roundOver;
 }
 
-@property (assign, nonatomic) id <QuestionViewControllerDelegate> delegate;
+@property (assign, nonatomic) id <QuestionViewControllerDelegate>                    delegate;
 
 
 - (IBAction)pressedDone:(id)sender;

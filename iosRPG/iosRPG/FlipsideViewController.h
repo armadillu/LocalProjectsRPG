@@ -8,15 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
-@class FlipsideViewController;
+@class       FlipsideViewController;
 
 @protocol FlipsideViewControllerDelegate
 - (void)flipsideViewControllerDidFinish:(FlipsideViewController *)controller;
 @end
 
-@interface FlipsideViewController : UIViewController
+@interface FlipsideViewController : UIViewController {
 
-@property (assign, nonatomic) id <FlipsideViewControllerDelegate> delegate;
+	IBOutlet UILabel *	info;
+	IBOutlet UILabel *	subInfo;
+	IBOutlet UIButton *	okButton;
+}
+
+@property (assign, nonatomic) id <FlipsideViewControllerDelegate>       delegate;
 
 - (IBAction)done:(id)sender;
 

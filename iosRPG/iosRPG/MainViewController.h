@@ -11,10 +11,13 @@
 #import "Constants.h"
 #import <CoreGraphics/CoreGraphics.h>
 #import <QuartzCore/QuartzCore.h>
+#import "AppData.h"
 
 
 @interface MainViewController : UIViewController <FlipsideViewControllerDelegate, QuestionViewControllerDelegate>{
 
+	IBOutlet UIButton * startButton;
+	IBOutlet UILabel * titleLabel;
 }
 
 - (IBAction)showInfo:(id)sender;

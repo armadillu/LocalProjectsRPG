@@ -14,16 +14,21 @@
 
 @implementation FlipsideViewController
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-}
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)viewWillAppear:(BOOL)animated;{
+
+	UIFont * bigTitle = [UIFont fontWithName:@"Capita-Light" size:35];
+	UIFont * smallFont = [UIFont fontWithName:@"Capita-Light" size:16];
+
+	[info setFont:bigTitle];
+	[subInfo setFont:smallFont];
+	subInfo.alpha = 0.5;
+
+	[okButton.titleLabel setFont:[UIFont fontWithName:@"Capita-Light" size:28]];
+	[okButton setTitleEdgeInsets:UIEdgeInsetsMake(0.0, 0.0, 5.0, 0.0)];
+	[okButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+	[okButton setBackgroundImage:[UIImage imageNamed:@"yesButton"] forState:UIControlStateNormal];
+
 }
 
 #pragma mark - Actions

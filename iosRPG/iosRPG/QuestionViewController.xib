@@ -43,10 +43,10 @@
 							<object class="IBUILabel" id="725532114">
 								<reference key="NSNextResponder" ref="968399668"/>
 								<int key="NSvFlags">301</int>
-								<string key="NSFrame">{{26, 48}, {274, 187}}</string>
+								<string key="NSFrame">{{26, 37}, {274, 187}}</string>
 								<reference key="NSSuperview" ref="968399668"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="937017851"/>
+								<reference key="NSNextKeyView" ref="374145395"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -65,6 +65,7 @@
 								</object>
 								<nil key="IBUIHighlightedColor"/>
 								<int key="IBUIBaselineAdjustment">0</int>
+								<float key="IBUIMinimumScaleFactor">0.80000001192092896</float>
 								<int key="IBUINumberOfLines">6</int>
 								<int key="IBUITextAlignment">1</int>
 								<int key="IBUILineBreakMode">0</int>
@@ -79,23 +80,22 @@
 									<double key="NSSize">28</double>
 									<int key="NSfFlags">16</int>
 								</object>
-								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 								<double key="preferredMaxLayoutWidth">274</double>
 							</object>
 							<object class="IBUIButton" id="937017851">
 								<reference key="NSNextResponder" ref="968399668"/>
 								<int key="NSvFlags">301</int>
-								<string key="NSFrame">{{98, 295}, {125, 44}}</string>
+								<string key="NSFrame">{{175, 335}, {90, 49}}</string>
 								<reference key="NSSuperview" ref="968399668"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="374145395"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
 								<int key="IBUIButtonType">1</int>
-								<string key="IBUINormalTitle">YES</string>
+								<string key="IBUINormalTitle">yes</string>
 								<object class="NSColor" key="IBUIHighlightedTitleColor" id="155509437">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MQA</bytes>
@@ -121,40 +121,17 @@
 							<object class="IBUIButton" id="374145395">
 								<reference key="NSNextResponder" ref="968399668"/>
 								<int key="NSvFlags">301</int>
-								<string key="NSFrame">{{98, 356}, {125, 44}}</string>
+								<string key="NSFrame">{{55, 335}, {90, 49}}</string>
 								<reference key="NSSuperview" ref="968399668"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="104184913"/>
+								<reference key="NSNextKeyView" ref="937017851"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
 								<int key="IBUIButtonType">1</int>
-								<string key="IBUINormalTitle">NO</string>
-								<reference key="IBUIHighlightedTitleColor" ref="155509437"/>
-								<object class="NSColor" key="IBUINormalTitleColor">
-									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
-								</object>
-								<reference key="IBUINormalTitleShadowColor" ref="742951708"/>
-								<reference key="IBUIFontDescription" ref="147695643"/>
-								<reference key="IBUIFont" ref="1039910570"/>
-							</object>
-							<object class="IBUIButton" id="104184913">
-								<reference key="NSNextResponder" ref="968399668"/>
-								<int key="NSvFlags">301</int>
-								<string key="NSFrame">{{130, 472}, {60, 44}}</string>
-								<reference key="NSSuperview" ref="968399668"/>
-								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
-								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<bool key="IBUIOpaque">NO</bool>
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<int key="IBUIContentHorizontalAlignment">0</int>
-								<int key="IBUIContentVerticalAlignment">0</int>
-								<int key="IBUIButtonType">1</int>
-								<string key="IBUINormalTitle">done</string>
+								<string key="IBUINormalTitle">no</string>
 								<reference key="IBUIHighlightedTitleColor" ref="155509437"/>
 								<object class="NSColor" key="IBUINormalTitleColor">
 									<int key="NSColorSpace">1</int>
@@ -165,7 +142,7 @@
 								<reference key="IBUIFont" ref="1039910570"/>
 							</object>
 						</array>
-						<string key="NSFrameSize">{320, 568}</string>
+						<string key="NSFrameSize">{320, 480}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="725532114"/>
@@ -178,13 +155,13 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 				</array>
-				<string key="NSFrameSize">{320, 568}</string>
+				<string key="NSFrameSize">{320, 480}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="968399668"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
-					<bytes key="NSWhite">MC4xOTU5NTYyMjY2AA</bytes>
+					<bytes key="NSWhite">MC4wOTkyODAxOTY2MwA</bytes>
 				</object>
 				<object class="IBUIScreenMetrics" key="IBUISimulatedDestinationMetrics">
 					<string key="IBUISimulatedSizeMetricsClass">IBUIScreenMetrics</string>
@@ -195,13 +172,13 @@
 							<integer value="3"/>
 						</array>
 						<array key="dict.values">
-							<string>{320, 568}</string>
-							<string>{568, 320}</string>
+							<string>{320, 480}</string>
+							<string>{480, 320}</string>
 						</array>
 					</object>
 					<string key="IBUITargetRuntime">IBCocoaTouchFramework</string>
-					<string key="IBUIDisplayName">Retina 4 Full Screen</string>
-					<int key="IBUIType">2</int>
+					<string key="IBUIDisplayName">Retina 3.5 Full Screen</string>
+					<int key="IBUIType">0</int>
 				</object>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
@@ -266,15 +243,6 @@
 					</object>
 					<int key="connectionID">39</int>
 				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">pressedDone:</string>
-						<reference key="source" ref="104184913"/>
-						<reference key="destination" ref="372490531"/>
-						<int key="IBEventType">7</int>
-					</object>
-					<int key="connectionID">42</int>
-				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -309,7 +277,6 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="725532114"/>
 							<reference ref="937017851"/>
-							<reference ref="104184913"/>
 							<reference ref="374145395"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
@@ -331,11 +298,6 @@
 						<reference key="object" ref="374145395"/>
 						<reference key="parent" ref="968399668"/>
 					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">41</int>
-						<reference key="object" ref="104184913"/>
-						<reference key="parent" ref="968399668"/>
-					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -348,7 +310,6 @@
 				<string key="19.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="20.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="21.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="41.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>

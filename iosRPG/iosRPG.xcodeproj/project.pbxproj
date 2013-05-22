@@ -22,6 +22,11 @@
 		BBB3A650174D0466001C78CA /* FlipsideViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBB3A64E174D0466001C78CA /* FlipsideViewController.xib */; };
 		BBB3A661174D2516001C78CA /* QuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB3A65F174D2516001C78CA /* QuestionViewController.m */; };
 		BBB3A662174D2516001C78CA /* QuestionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBB3A660174D2516001C78CA /* QuestionViewController.xib */; };
+		BBB3A667174D54D4001C78CA /* CapitaL.otf in Resources */ = {isa = PBXBuildFile; fileRef = BBB3A666174D53C3001C78CA /* CapitaL.otf */; };
+		BBB3A66B174D55FA001C78CA /* noButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB3A669174D55FA001C78CA /* noButton@2x.png */; };
+		BBB3A66C174D55FA001C78CA /* yesButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB3A66A174D55FA001C78CA /* yesButton@2x.png */; };
+		BBB3A66F174D5824001C78CA /* AppData.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB3A66E174D5824001C78CA /* AppData.m */; };
+		BBB3A671174D5DA5001C78CA /* startButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB3A670174D5DA5001C78CA /* startButton@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +53,12 @@
 		BBB3A65E174D2516001C78CA /* QuestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionViewController.h; sourceTree = "<group>"; };
 		BBB3A65F174D2516001C78CA /* QuestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionViewController.m; sourceTree = "<group>"; };
 		BBB3A660174D2516001C78CA /* QuestionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuestionViewController.xib; sourceTree = "<group>"; };
+		BBB3A666174D53C3001C78CA /* CapitaL.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = CapitaL.otf; sourceTree = "<group>"; };
+		BBB3A669174D55FA001C78CA /* noButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "noButton@2x.png"; sourceTree = "<group>"; };
+		BBB3A66A174D55FA001C78CA /* yesButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yesButton@2x.png"; sourceTree = "<group>"; };
+		BBB3A66D174D5824001C78CA /* AppData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppData.h; sourceTree = "<group>"; };
+		BBB3A66E174D5824001C78CA /* AppData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppData.m; sourceTree = "<group>"; };
+		BBB3A670174D5DA5001C78CA /* startButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "startButton@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +114,9 @@
 				BBB3A664174D27A2001C78CA /* Questions */,
 				BBB3A663174D2790001C78CA /* Info */,
 				BBB3A634174D0466001C78CA /* Supporting Files */,
+				BBB3A668174D55F1001C78CA /* assets */,
+				BBB3A66D174D5824001C78CA /* AppData.h */,
+				BBB3A66E174D5824001C78CA /* AppData.m */,
 			);
 			path = iosRPG;
 			sourceTree = "<group>";
@@ -139,6 +153,17 @@
 				BBB3A660174D2516001C78CA /* QuestionViewController.xib */,
 			);
 			name = Questions;
+			sourceTree = "<group>";
+		};
+		BBB3A668174D55F1001C78CA /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				BBB3A666174D53C3001C78CA /* CapitaL.otf */,
+				BBB3A670174D5DA5001C78CA /* startButton@2x.png */,
+				BBB3A669174D55FA001C78CA /* noButton@2x.png */,
+				BBB3A66A174D55FA001C78CA /* yesButton@2x.png */,
+			);
+			name = assets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -196,9 +221,13 @@
 				BBB3A640174D0466001C78CA /* Default.png in Resources */,
 				BBB3A642174D0466001C78CA /* Default@2x.png in Resources */,
 				BBB3A644174D0466001C78CA /* Default-568h@2x.png in Resources */,
+				BBB3A667174D54D4001C78CA /* CapitaL.otf in Resources */,
 				BBB3A64D174D0466001C78CA /* MainViewController.xib in Resources */,
 				BBB3A650174D0466001C78CA /* FlipsideViewController.xib in Resources */,
 				BBB3A662174D2516001C78CA /* QuestionViewController.xib in Resources */,
+				BBB3A66B174D55FA001C78CA /* noButton@2x.png in Resources */,
+				BBB3A66C174D55FA001C78CA /* yesButton@2x.png in Resources */,
+				BBB3A671174D5DA5001C78CA /* startButton@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,6 +243,7 @@
 				BBB3A647174D0466001C78CA /* MainViewController.m in Sources */,
 				BBB3A64A174D0466001C78CA /* FlipsideViewController.m in Sources */,
 				BBB3A661174D2516001C78CA /* QuestionViewController.m in Sources */,
+				BBB3A66F174D5824001C78CA /* AppData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
