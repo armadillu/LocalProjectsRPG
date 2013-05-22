@@ -8,7 +8,6 @@
 
 /* Begin PBXFileReference section */
 		BB76806F174BF23F006F9A3A /* app.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = app.py; sourceTree = "<group>"; };
-		BB768071174BF23F006F9A3A /* readme.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = readme.txt; sourceTree = "<group>"; };
 		BB76807A174BF482006F9A3A /* style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
 		BB76807C174BF482006F9A3A /* admin.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = admin.html; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -27,17 +26,8 @@
 				BB76806F174BF23F006F9A3A /* app.py */,
 				BB768079174BF482006F9A3A /* static */,
 				BB76807B174BF482006F9A3A /* templates */,
-				BB768070174BF23F006F9A3A /* Supporting Files */,
 			);
 			path = app;
-			sourceTree = "<group>";
-		};
-		BB768070174BF23F006F9A3A /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				BB768071174BF23F006F9A3A /* readme.txt */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		BB768079174BF482006F9A3A /* static */ = {

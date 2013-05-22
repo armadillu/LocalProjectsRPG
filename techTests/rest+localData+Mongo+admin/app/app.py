@@ -11,6 +11,7 @@ QUESTIONS = [
 	{"questionID" : "question3","question" : "what are we doing here?"}
 ]
 
+#to parse incoming data fields
 parser = reqparse.RequestParser()
 parser.add_argument('question', type=str)
 
