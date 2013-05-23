@@ -4,27 +4,27 @@
 /questions 										
 
 	>> list of all questions
-	>> $ curl http://localhost:5000/questions
+	>> $ curl http://oriolbcn.dyndns.org:5000/questions
 	
 /tokens											
 	
 	>> list of tokens
-	>> $ curl http://localhost:5000/tokens
+	>> $ curl http://oriolbcn.dyndns.org:5000/tokens
 	
 /rounds
 
 	>> list of rounds
-	>> $ curl http://localhost:5000/rounds
+	>> $ curl http://oriolbcn.dyndns.org:5000/rounds
 
 /round/roundID
 
 	>> roundID:[0..N], returns list of questions for that round
-	>> $ curl http://localhost:5000/round/roundID
+	>> $ curl http://oriolbcn.dyndns.org:5000/round/roundID
 
 /tokenValue/tokenID/questionID
 
 	>> get values for yes and no given a token <-> question relationship
-	>> $ curl http://localhost:5000//tokenValue/tokenID/QuestionID
+	>> $ curl http://oriolbcn.dyndns.org:5000//tokenValue/tokenID/QuestionID
 
 // PUT ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -32,17 +32,17 @@
 /questions
 
 	>> add question, send actual question as data
-	>> $ curl http://localhost:5000/questions -d "question=what time is it?" -X POST 
+	>> $ curl http://oriolbcn.dyndns.org:5000/questions -d "question=what time is it?" -X POST 
 
 /tokens
 
 	>> add token, actual token as data
-	>> $ curl http://localhost:5000/tokens -d "token=happiness" -X POST 
+	>> $ curl http://oriolbcn.dyndns.org:5000/tokens -d "token=happiness" -X POST 
 
 /tokenValue/tokenID/questionID
 
 	>> set a value (YES or NO) given a token <-> question relationship; both tokenID and questionID must exist
-	>> $ curl http://localhost:5000//tokenValue/tokenID/QuestionID -d "yes=2" -X POST 
+	>> $ curl http://oriolbcn.dyndns.org:5000//tokenValue/tokenID/QuestionID -d "yes=2" -X POST 
 
 
 // DELETE ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -52,12 +52,12 @@
 /questions/questionID
 		 					
 	>> delete questionID
-	>> $ curl http://localhost:5000/questions/questionID -X DELETE
+	>> $ curl http://oriolbcn.dyndns.org:5000/questions/questionID -X DELETE
 
 /tokens/tokenID
 
 	>> delete tokenID
-	>> $ curl http://localhost:5000/tokens/tokenID -X DELETE
+	>> $ curl http://oriolbcn.dyndns.org:5000/tokens/tokenID -X DELETE
 
 
 // UPDATE ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -66,9 +66,9 @@
 /questions/questionID
 		 					
 	>> update question
-	>> $ curl http://localhost:5000/questions/questionID -d "question=Why am I tweaking the question?" -X POST
+	>> $ curl http://oriolbcn.dyndns.org:5000/questions/questionID -d "question=Why am I tweaking the question?" -X POST
 
 /tokens/tokenID
 
 	>> update token
-	>> $ curl http://localhost:5000/tokens/tokenID -d "token=updated Token" -X POST
+	>> $ curl http://oriolbcn.dyndns.org:5000/tokens/tokenID -d "token=updated Token" -X POST

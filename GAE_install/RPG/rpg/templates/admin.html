@@ -1,0 +1,92 @@
+
+<!doctype html>
+<title>Admin</title>
+
+<script src="{{ url_for('static', filename='jquery-1.9.1.min.js') }}"></script>
+
+<script type="text/javascript">
+
+	//remove a question from the DOM based on its ID
+	function deleteQuestion(questionID){
+		$.ajax({
+			   type: 'DELETE',
+			   dataType: "json",
+			   url: '/questions/'+questionID,
+			   success: function(data){
+				$('#' + questionID).fadeOut(300, function() { $(this).remove(); }); //fade out and remove from dom once faded
+			   }
+			});
+	}
+
+	function createQuestionHTML(question, questionID){
+		var img = "<img class='deleteButton' src='/static/delete.png' onClick=deleteQuestion(\'"+ questionID + "\');>";
+		var html = "<div id='" + questionID + "'><li><h2>" + img + questionID +  "</h2>" + question + "</li></div>";
+		//console.log(html);
+		return html;
+	}
+
+	//on load,
+	$(document).ready(function () {
+
+	  //make our form do REST calls
+	  //intercept form submit, send a POST request to REST to add question
+	  $('#addQuestionForm').submit(function(e) {
+
+			   e.preventDefault();
+			   q = $("#questionTextArea").val(); //user typed question
+			   $.ajax({
+					  type: "POST",
+					  url: "/questions",
+					  dataType: "json",
+					  data: "question=" + q,
+					  success: function(data){
+								var qID = data[0].questionID;
+								var q = data[0].question;
+								//console.log("adding: " + qID + "; " + q);
+								var html = createQuestionHTML(q, qID);
+								$('#restQuestions').append(html) ;
+								$("#questionTextArea").val("");
+							}
+
+					  });
+
+	   });
+
+	  //fetch all questions from REST api
+	  $.ajax({
+			 type: "GET",
+			 url: "/questions",
+			 success: function(data){
+				var html = "";
+				for (var key=0, size=data.length; key<size; key++){
+					var qID = data[key].questionID;
+					var q = data[key].question;
+					html += createQuestionHTML(q, qID);
+				}
+				$('#restQuestions')[0].innerHTML = html;
+			 }
+			 });
+	  });
+
+</script>
+
+
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+
+	<div class=page>
+		<h1>RPG Admin</h1>
+
+		<ul class=entries id="restQuestions"><!-- this will hold the questions we get from the REST api -->
+		</ul>
+
+		<div class=myForm>
+			<form id=addQuestionForm  class=add-entry action="#" method="post">
+				<dl>
+					<dd>Add A New Question:
+					<dd><textarea name=question rows=3 cols=40 id=questionTextArea></textarea>
+					<dd><input type=submit value="Add Question">
+				</dl>
+			</form>
+		</div>
+
+	</div><!--page-->
