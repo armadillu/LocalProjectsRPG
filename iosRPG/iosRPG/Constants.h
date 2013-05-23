@@ -12,5 +12,5 @@
 #define BUTTON_FADE_ANIMATION_DURATION 0.2
 #define FADE_ANIMATION_DURATION 0.5
 #define GRAPH_ANIMATION_DURATION 1
-
+#define DegreesToRadians(x) ((x) * M_PI / 180.0)
 #endif

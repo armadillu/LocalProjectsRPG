@@ -11,8 +11,8 @@
 		BBB3A630174D0466001C78CA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBB3A62F174D0466001C78CA /* Foundation.framework */; };
 		BBB3A632174D0466001C78CA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBB3A631174D0466001C78CA /* CoreGraphics.framework */; };
 		BBB3A638174D0466001C78CA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BBB3A636174D0466001C78CA /* InfoPlist.strings */; };
-		BBB3A63A174D0466001C78CA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB3A639174D0466001C78CA /* main.m */; };
-		BBB3A63E174D0466001C78CA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB3A63D174D0466001C78CA /* AppDelegate.m */; };
+		BBB3A63A174D0466001C78CA /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = BBB3A639174D0466001C78CA /* main.mm */; };
+		BBB3A63E174D0466001C78CA /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = BBB3A63D174D0466001C78CA /* AppDelegate.mm */; };
 		BBB3A640174D0466001C78CA /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB3A63F174D0466001C78CA /* Default.png */; };
 		BBB3A642174D0466001C78CA /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB3A641174D0466001C78CA /* Default@2x.png */; };
 		BBB3A644174D0466001C78CA /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB3A643174D0466001C78CA /* Default-568h@2x.png */; };
@@ -20,7 +20,7 @@
 		BBB3A64A174D0466001C78CA /* FlipsideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB3A649174D0466001C78CA /* FlipsideViewController.m */; };
 		BBB3A64D174D0466001C78CA /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBB3A64B174D0466001C78CA /* MainViewController.xib */; };
 		BBB3A650174D0466001C78CA /* FlipsideViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBB3A64E174D0466001C78CA /* FlipsideViewController.xib */; };
-		BBB3A661174D2516001C78CA /* QuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB3A65F174D2516001C78CA /* QuestionViewController.m */; };
+		BBB3A661174D2516001C78CA /* QuestionViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BBB3A65F174D2516001C78CA /* QuestionViewController.mm */; };
 		BBB3A662174D2516001C78CA /* QuestionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBB3A660174D2516001C78CA /* QuestionViewController.xib */; };
 		BBB3A667174D54D4001C78CA /* CapitaL.otf in Resources */ = {isa = PBXBuildFile; fileRef = BBB3A666174D53C3001C78CA /* CapitaL.otf */; };
 		BBB3A66B174D55FA001C78CA /* noButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB3A669174D55FA001C78CA /* noButton@2x.png */; };
@@ -43,10 +43,10 @@
 		BBB3A631174D0466001C78CA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		BBB3A635174D0466001C78CA /* iosRPG-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iosRPG-Info.plist"; sourceTree = "<group>"; };
 		BBB3A637174D0466001C78CA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		BBB3A639174D0466001C78CA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		BBB3A639174D0466001C78CA /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		BBB3A63B174D0466001C78CA /* iosRPG-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iosRPG-Prefix.pch"; sourceTree = "<group>"; };
 		BBB3A63C174D0466001C78CA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		BBB3A63D174D0466001C78CA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		BBB3A63D174D0466001C78CA /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		BBB3A63F174D0466001C78CA /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		BBB3A641174D0466001C78CA /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		BBB3A643174D0466001C78CA /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -57,8 +57,8 @@
 		BBB3A64C174D0466001C78CA /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainViewController.xib; sourceTree = "<group>"; };
 		BBB3A64F174D0466001C78CA /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/FlipsideViewController.xib; sourceTree = "<group>"; };
 		BBB3A656174D04B4001C78CA /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
-		BBB3A65E174D2516001C78CA /* QuestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionViewController.h; sourceTree = "<group>"; };
-		BBB3A65F174D2516001C78CA /* QuestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionViewController.m; sourceTree = "<group>"; };
+		BBB3A65E174D2516001C78CA /* QuestionViewController.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = QuestionViewController.h; sourceTree = "<group>"; };
+		BBB3A65F174D2516001C78CA /* QuestionViewController.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = QuestionViewController.mm; sourceTree = "<group>"; };
 		BBB3A660174D2516001C78CA /* QuestionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuestionViewController.xib; sourceTree = "<group>"; };
 		BBB3A666174D53C3001C78CA /* CapitaL.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = CapitaL.otf; sourceTree = "<group>"; };
 		BBB3A669174D55FA001C78CA /* noButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "noButton@2x.png"; sourceTree = "<group>"; };
@@ -126,7 +126,7 @@
 			children = (
 				BBB3A656174D04B4001C78CA /* Constants.h */,
 				BBB3A63C174D0466001C78CA /* AppDelegate.h */,
-				BBB3A63D174D0466001C78CA /* AppDelegate.m */,
+				BBB3A63D174D0466001C78CA /* AppDelegate.mm */,
 				BBB3A645174D0466001C78CA /* MainViewController.h */,
 				BBB3A646174D0466001C78CA /* MainViewController.m */,
 				BBB3A64B174D0466001C78CA /* MainViewController.xib */,
@@ -147,7 +147,7 @@
 			children = (
 				BBB3A635174D0466001C78CA /* iosRPG-Info.plist */,
 				BBB3A636174D0466001C78CA /* InfoPlist.strings */,
-				BBB3A639174D0466001C78CA /* main.m */,
+				BBB3A639174D0466001C78CA /* main.mm */,
 				BBB3A63B174D0466001C78CA /* iosRPG-Prefix.pch */,
 				BBB3A63F174D0466001C78CA /* Default.png */,
 				BBB3A641174D0466001C78CA /* Default@2x.png */,
@@ -170,7 +170,7 @@
 			isa = PBXGroup;
 			children = (
 				BBB3A65E174D2516001C78CA /* QuestionViewController.h */,
-				BBB3A65F174D2516001C78CA /* QuestionViewController.m */,
+				BBB3A65F174D2516001C78CA /* QuestionViewController.mm */,
 				BBB3A660174D2516001C78CA /* QuestionViewController.xib */,
 			);
 			name = Questions;
@@ -267,11 +267,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BBB3A63A174D0466001C78CA /* main.m in Sources */,
-				BBB3A63E174D0466001C78CA /* AppDelegate.m in Sources */,
+				BBB3A63A174D0466001C78CA /* main.mm in Sources */,
+				BBB3A63E174D0466001C78CA /* AppDelegate.mm in Sources */,
 				BBB3A647174D0466001C78CA /* MainViewController.m in Sources */,
 				BBB3A64A174D0466001C78CA /* FlipsideViewController.m in Sources */,
-				BBB3A661174D2516001C78CA /* QuestionViewController.m in Sources */,
+				BBB3A661174D2516001C78CA /* QuestionViewController.mm in Sources */,
 				BBB3A66F174D5824001C78CA /* AppData.m in Sources */,
 				BBB3A67E174D7D45001C78CA /* myGraphView.m in Sources */,
 			);

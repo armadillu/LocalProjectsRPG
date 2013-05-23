@@ -30,7 +30,7 @@
 
 -(int)numTokens;
 -(int)scoreForToken:(int)token;
-
+-(NSString*)tokenAtIndex:(int)i;
 
 -(NSArray *) questionsForRound:(int)round;
 -(int) numRounds;

@@ -8,15 +8,15 @@
 
 #import "AppData.h"
 
-static AppData *     appdataSingleton = nil;
+static AppData * appdataSingleton = nil;
 
 @implementation AppData
 
 
 -(id)init {
-	NSURL*      musicFile = [NSURL fileURLWithPath:[[NSBundle mainBundle]
-													pathForResource:@"yes"
-													ofType:@"wav"]];
+	NSURL * musicFile = [NSURL fileURLWithPath:[[NSBundle mainBundle]
+												pathForResource:@"yes"
+												ofType:@"wav"]];
 	yesSound = [[AVAudioPlayer alloc] initWithContentsOfURL:musicFile error:nil];
 	[yesSound prepareToPlay];
 
@@ -36,20 +36,29 @@ static AppData *     appdataSingleton = nil;
 }
 
 
+-(NSString *)tokenAtIndex:(int)i {
+
+	NSArray * tokens = [NSArray arrayWithObjects :
+						@"income tax",
+						@"education level",
+						@"public health",
+						@"entrepreneurship",
+						@"community art",
+						@"immigration",
+						nil
+						];
+
+	return [tokens objectAtIndex:i];
+}
+
+
 -(NSArray *) questionsForRound:(int)round {
 
 	return [NSArray arrayWithObjects:
-			@"What is the weather like?",
+			@"Should we have more parks?",
 			@"Should we add more schools?",
-			@"Are monkeys going to take over the world?",
-			@"Are you bored of this yet?",
-			@"What is the weather like?",
-			@"Should we add more schools?",
-			@"Are monkeys going to take over the world?",
-			@"Are you bored of this yet?",
-			@"What is the weather like?",
-			@"Should we add more schools?",
-			@"Are monkeys going to take over the world?",
+			@"Should we provide shelter for homeless people?",
+			@"Are you at home?",
 			@"Are you bored of this yet?",
 			nil
 			];
@@ -66,26 +75,27 @@ static AppData *     appdataSingleton = nil;
 }
 
 
--(NSString*) nextQuestion {
+-(NSString *) nextQuestion {
 
-	NSArray *     quests = [self questionsForRound:0];
-	if (currentQuestion < [quests count]) {
-		NSString *     q = [quests objectAtIndex:currentQuestion];
+	NSArray * quests = [self questionsForRound:0];
+	if(currentQuestion < [quests count]){
+		NSString * q = [quests objectAtIndex:currentQuestion];
 		currentQuestion++;
 		return q;
-	}else{
+	}
+	else{
 		return nil;
 	}
 }
 
 
--(int)numTokens{
+-(int)numTokens {
 	return 5;
 }
 
 
--(int)scoreForToken:(int)token{
-	return rand()%10 - 5;
+-(int)scoreForToken:(int)token {
+	return rand() % 10 - 5;
 }
 
 
@@ -111,8 +121,8 @@ static AppData *     appdataSingleton = nil;
 ////////////////////////////////////////////////////////////////////////
 // Singleton pattern stuff
 
-+ (AppData*) get {
-	if (appdataSingleton == nil) {
++ (AppData *) get {
+	if(appdataSingleton == nil){
 		[[self alloc] init]; // assignment not done here
 	}
 	return appdataSingleton;
@@ -120,7 +130,7 @@ static AppData *     appdataSingleton = nil;
 
 
 + (id)allocWithZone:(NSZone *)zone {
-	if (appdataSingleton == nil) {
+	if(appdataSingleton == nil){
 		appdataSingleton = [super allocWithZone:zone];
 		return appdataSingleton;  // assignment and return on first allocation
 	}
