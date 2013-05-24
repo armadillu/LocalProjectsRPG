@@ -14,6 +14,14 @@
 
 @implementation QuestionViewController
 
+-(NSArray*)getColors{
+	return  colors;
+}
+
+-(int*)getScores{
+	return tokenScores;
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
 
 	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -23,15 +31,15 @@
 		//			NSLog(@"%@", [UIFont fontNamesForFamilyName:family]);
 		//		}
 
-		animatedLabels = [[NSMutableArray alloc] initWithCapacity:6];
-		staticLabels = [[NSMutableArray alloc] initWithCapacity:6];
-		bars = [[NSMutableArray alloc] initWithCapacity:6];
+		//animatedLabels = [[NSMutableArray alloc] initWithCapacity:6];
+		//staticLabels = [[NSMutableArray alloc] initWithCapacity:6];
+		//bars = [[NSMutableArray alloc] initWithCapacity:6];
 		colors = [[NSArray arrayWithObjects:[UIColor redColor], [UIColor greenColor], [UIColor blueColor],
 				   [UIColor yellowColor], [UIColor orangeColor], nil] retain];
 		//		colors = [[NSArray arrayWithObjects: [UIColor grayColor], [UIColor grayColor], [UIColor grayColor],
 		//				   [UIColor grayColor], [UIColor grayColor], nil] retain];
 
-		NSLog(@"initWithNibName");
+		//NSLog(@"initWithNibName");
 	}
 	firstTime = true;
 	return self;
@@ -40,7 +48,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
 
-	if (firstTime){
+	if (firstTime) {
 		originalQuestionFrame = question.frame;
 		originalYesFrame = yesButton.frame;
 		originalNoFrame = noButton.frame;
@@ -67,8 +75,8 @@
 
 	//reset scores
 	int n = [[AppData get] numTokens];
-	tokenScores = (int *)malloc(sizeof(int) * n);
-	for(int i = 0; i < n; i++) {
+	tokenScores = (int *)malloc(sizeof(int) * n * 2); // *2 to be safe for experiments
+	for(int i = 0; i < n * 2; i++) {
 		tokenScores[i] = 0;
 	}
 
@@ -84,24 +92,18 @@
 	}
 }
 
-- (void)viewDidDisappear:(BOOL)animated;{
+
+- (void)viewDidDisappear:(BOOL)animated; {
 	[self cleanUpStructures];
 }
 
 
--(void)cleanUpStructures{
+-(void)cleanUpStructures {
 
-	for(UILabel* v in staticLabels){
-		[v removeFromSuperview];
-		[v release];
-	}
-	[staticLabels removeAllObjects];
-
-	for(myGraphView* v in bars){
-		[v removeFromSuperview];
-		[v release];
-	}
-	[bars removeAllObjects];
+	[staticLabel removeFromSuperview];
+	[staticLabel release];
+	[bar removeFromSuperview];
+	[bar release];
 }
 
 
@@ -110,40 +112,43 @@
 	int y = 0; //starting y for graphs
 	int h = 16; // each bar graph height
 	int spacing = 5; //spacing betwen bars
-	int initialBarW = INITIAL_GRAPH_BAR_W; //
 
 	int n = [[AppData get] numTokens];
+	currentToken = 0;
 	graphics.alpha = 0;
 
-	for(int i = 0; i < n; i++) {
-		UIColor * col = [colors objectAtIndex:i];
-		CGRect r = CGRectMake(self.view.frame.size.width / 2 - initialBarW / 2, y, initialBarW, h);
-		myGraphView * view = [[myGraphView alloc] initWithFrame:r];
-		y += h + spacing;
-		view.backgroundColor = col;
-		[graphics addSubview:view];
-		[bars addObject:view];
-		UILabel * lab = [[UILabel alloc] initWithFrame:CGRectMake(0, y - 24, graphics.frame.size.width, 20)];
-		lab.textAlignment = NSTextAlignmentCenter;
-		lab.backgroundColor = [UIColor clearColor];
-		lab.font = [UIFont fontWithName:@"Capita-Light" size:13];
-		lab.text = [NSString stringWithFormat:@"%@: %d", [[AppData get] tokenAtIndex: i], tokenScores[i]];
-		lab.opaque = false;
-		//		lab.shadowColor = [UIColor blackColor];
-		//		lab.shadowOffset = CGSizeMake(0,2);
-		lab.layer.shadowColor = [[UIColor blackColor] CGColor];
-		lab.layer.shadowOffset = CGSizeMake(0, 0);
-		lab.layer.shadowRadius = 1.0;
-		lab.layer.shadowOpacity = 1;
-		lab.textColor = [UIColor whiteColor];
-		[staticLabels addObject:lab];
-		[graphics addSubview:lab];
-	}
+	staticLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, graphics.frame.size.width, 40)];
+	staticLabel.textAlignment = NSTextAlignmentCenter;
+	staticLabel.backgroundColor = [UIColor clearColor];
+	staticLabel.font = [UIFont fontWithName:@"Capita-Light" size:20];
+	staticLabel.text = [NSString stringWithFormat:@"%@", [[AppData get] tokenAtIndex: 0] ];
+	staticLabel.opaque = false;
+	staticLabel.textColor = [UIColor whiteColor];
+	staticLabel.alpha = 0;
+	[graphics addSubview:staticLabel];
+
+	animatedLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, graphics.frame.size.width, 40)];
+	animatedLabel.textAlignment = NSTextAlignmentCenter;
+	animatedLabel.backgroundColor = [UIColor clearColor];
+	animatedLabel.font = [UIFont fontWithName:@"Capita-Light" size:20];
+	animatedLabel.text = [NSString stringWithFormat:@"%@", [[AppData get] tokenAtIndex: 0] ];
+	animatedLabel.opaque = false;
+	animatedLabel.textColor = [UIColor whiteColor];
+	[graphics addSubview:animatedLabel];
+	animatedLabel.alpha = 0;
+
+
+	bar = [[myGraphView alloc] initWithFrame: CGRectMake(0,0,0,0)];
+	bar.backgroundColor = [colors objectAtIndex:0];
+	[graphics addSubview:bar];
+	bar.alpha = 0;
 }
 
 
-
 /////////////////////////////////////////////////////////////////////////////////////
+
+
+
 
 
 - (IBAction)pressedYES:(id)sender {
@@ -151,8 +156,7 @@
 		pressedYes = YES;
 		((UIButton *)sender).highlighted = NO;
 		[[AppData get] PlayYesButtonSound];
-		[self makeSpaceForGraphs];
-		[self updateGraph];
+		[self userAnsered];
 	}
 }
 
@@ -162,28 +166,21 @@
 		pressedYes = NO;
 		((UIButton *)sender).highlighted = NO;
 		[[AppData get] PlayNoButtonSound];
-		[self makeSpaceForGraphs];
-		[self updateGraph];
+		[self userAnsered];
 	}
 }
 
 
--(void)resetAllGraphBars {
-
-	for(myGraphView * view in bars) {
-		//reset to center
-		CGRect r = view.frame;
-		r.origin.x = self.view.frame.size.width / 2 - INITIAL_GRAPH_BAR_W / 2;
-		r.size.width = INITIAL_GRAPH_BAR_W;
-		//view.alpha = 0;
-		[view setFrame:r];
-	}
+-(void)userAnsered {
+	[self collectScoresForThisRound];
+	[self makeSpaceForGraphs];
 }
 
--(void)layoutQuestion:(NSString*) nextQuestion{
+
+-(void)layoutQuestion:(NSString*) nextQuestion {
 
 	if(nextQuestion==nil) { // SHOW NEXT QUESTION
-		nextQuestion = @"Round is Over!";
+		nextQuestion = @"Well Done!";
 		roundOver = true;
 		yesButton.hidden = true;
 		noButton.hidden = true;
@@ -198,10 +195,11 @@
 
 }
 
+
 -(void)showQuestion {
 
-
-	//set plot bars to initial state, clean up graphs and buttons
+	currentToken = 0; 
+	//hide yes & no buttons, end of question, ready to show next one, hide graphics
 	[UIView animateWithDuration: GRAPH_ANIMATION_DURATION
 						  delay: 0
 						options: UIViewAnimationOptionCurveEaseOut
@@ -209,12 +207,14 @@
 						 graphics.alpha = 0;
 						 yesButton.alpha = 0;
 						 noButton.alpha = 0;
-						 [self resetAllGraphBars];
 					 }
+
+
 					 completion:^(BOOL finished){}
 	 ];
 
 
+	//layout the next question halfawy the flip animation, a bit ghetto but works!
 	[self performSelector:@selector(layoutQuestion:) withObject:[[AppData get] nextQuestion] afterDelay:GRAPH_ANIMATION_DURATION*0.5];
 
 	[UIView transitionWithView:question
@@ -223,6 +223,7 @@
 					animations: ^{
 						//[self layoutQuestion: [[AppData get] nextQuestion]];
 					}
+
 
 					completion:^(BOOL finished){
 
@@ -234,11 +235,6 @@
 							[UIView setAnimationDuration:FADE_ANIMATION_DURATION];
 							yesButton.alpha = 1;
 							noButton.alpha = 1;
-							CGRect f = question.frame;
-							//f.origin.y += QUESTION_SLIDE_DISTANCE;
-							f.size.height -= QUESTION_SLIDE_DISTANCE;
-							//question.frame = f;
-							//graphics.alpha = 0;
 							[UIView setAnimationDelegate:self];
 							[UIView setAnimationDidStopSelector:@selector(buttonAnimEnded:finished:context:)];
 							[UIView commitAnimations];
@@ -249,9 +245,24 @@
 							[UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
 							graphics.alpha = 0;
 							[UIView commitAnimations];
-							[self.delegate performSelector:@selector(questionViewControllerDidFinish:) withObject:self afterDelay:FLIP_ANIMATION_DURATION + ROUND_OVER_MSG_DURATION];
+							[self performSelector:@selector(showResultScores) withObject:nil afterDelay:ROUND_OVER_MSG_DURATION];
+
 						}
 					}];
+}
+
+#pragma mark - 
+
+-(void)showResultScores{
+	ResultsViewController *controller = [[[ResultsViewController alloc] initWithNibName:@"ResultsViewController" bundle:nil] autorelease];
+	controller.delegate = self;
+	controller.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+	[self presentViewController:controller animated:YES completion:nil];
+}
+
+//user pressed done, ended looking at his/her score, back to homepge
+- (void)resultViewControllerDidFinish:(ResultsViewController *)controller;{
+	[self.delegate questionViewControllerDidFinish:self];
 }
 
 
@@ -260,174 +271,182 @@
 }
 
 
--(void)makeSpaceForGraphs{
+-(void)collectScoresForThisRound {
+	//collect all scores for this round
+	scores = [[NSMutableArray arrayWithCapacity:5] retain]; // scores this round
+	int numTokens = [[AppData get] numTokens];
+	for(int i = 0; i < numTokens; i++) {
+		int growth = [[AppData get] scoreForToken:i];
+		tokenScores[i] += growth; //update global scores
+		[scores addObject:[NSNumber numberWithInt:growth]];
+	}
+}
+
+
+-(void)makeSpaceForGraphs {
 
 	animating = true;
 
-	// move question to top
-	[UIView beginAnimations:nil context:nil];
-	[UIView setAnimationDuration:FADE_ANIMATION_DURATION];
-	CGRect questionRect = question.frame;
-	questionRect.origin.y = SCREEN_EDGE;
-	question.frame = questionRect;
+	[UIView animateWithDuration: FADE_ANIMATION_DURATION
+						  delay: 0
+						options: UIViewAnimationOptionCurveEaseOut
+					 animations:^{
+						 // move question to top
+						 CGRect questionRect = question.frame;
+						 questionRect.origin.y = SCREEN_EDGE - 10; // small tweak 
+						 question.frame = questionRect;
 
-	// hide and moving yes / no button accordingly
-	CGRect buttonRect = yesButton.frame;
-	buttonRect.origin.y = SCREEN_EDGE + questionRect.size.height + FRA_ELEMENT_GAP;
-	buttonRect.origin.x = wrapper.frame.size.width/2 - yesButton.frame.size.width/2;
+						 // hide and moving yes / no button accordingly
+						 CGRect buttonRect = yesButton.frame;
+						 buttonRect.origin.y = questionRect.origin.y + questionRect.size.height + FRA_ELEMENT_GAP;
+						 buttonRect.origin.x = wrapper.frame.size.width/2 - yesButton.frame.size.width/2;
 
-	if (pressedYes){ //focus on YES
-		yesButton.alpha = 1;
-		noButton.alpha = 0;
-		yesButton.frame = buttonRect;
-	}else{ // focus on NO
-		yesButton.alpha = 0;
-		noButton.alpha = 1;
-		noButton.frame = buttonRect;
-	}
-	graphics.alpha = 1;
-	CGRect graphsRect = graphics.frame;
-	graphsRect.origin.y = buttonRect.origin.y + buttonRect.size.height + FRA_ELEMENT_GAP; //starting y for graphs
-	graphics.frame = graphsRect;
-	[UIView commitAnimations];
+						 if (pressedYes) {                                //focus on YES
+							 yesButton.alpha = 1;
+							 noButton.alpha = 0;
+							 yesButton.frame = buttonRect;
+						 }else{                                 // focus on NO
+							 yesButton.alpha = 0;
+							 noButton.alpha = 1;
+							 noButton.frame = buttonRect;
+						 }
+						 graphics.alpha = 0;
+						 CGRect graphsRect = graphics.frame;
+						 graphsRect.origin.y = buttonRect.origin.y + buttonRect.size.height + FRA_ELEMENT_GAP;                                 //starting y for graphs
+						 graphsRect.size.height = wrapper.frame.size.height - graphsRect.origin.y - SCREEN_EDGE;
+						 graphics.frame = graphsRect;
+					 }
+
+
+					 completion:^(BOOL finished){
+						 //once its all in its place, start the graphs animation
+						 [self startGraphAnimation];
+					 }
+
+
+	 ];
 
 }
 
 
--(void)updateGraph {
+-(void)resetGraphState { //taking in account current graphic frame, set token label to center, set bar to 0 height in middle;
 
-	int c = 0;
+	int labelHeight = FRA_ELEMENT_GAP * 1.5;
+	int growth = [[scores objectAtIndex:currentToken]intValue]; // score this this question's answer for this token
+	CGRect r = CGRectMake(wrapper.frame.size.width/2 - BAR_WIDTH/2,
+						  graphics.frame.size.height/2 + ((growth < 0) ? labelHeight/2 : -labelHeight/2),
+						  BAR_WIDTH, 0);
+	bar.frame = r;
+	bar.backgroundColor = [colors objectAtIndex:currentToken];
 
-	//collect all scores for this round
-	NSMutableArray * scores = [NSMutableArray arrayWithCapacity:5];
-	for(myGraphView * view in staticLabels) {
-		int growth = [[AppData get] scoreForToken:0];
-		tokenScores[c] += growth; //update global scores
-		[scores addObject:[NSNumber numberWithInt:growth]];
-		c++;
+	CGRect r2 = staticLabel.frame;
+	r2.origin.y = graphics.frame.size.height/2 - staticLabel.frame.size.height/2;
+	staticLabel.frame = r2;
+	staticLabel.text = [[AppData get] tokenAtIndex:currentToken];
+
+	CGRect r3 = animatedLabel.frame;
+	r3.origin.y = graphics.frame.size.height/2 + ((growth < 0) ? labelHeight : -labelHeight) - animatedLabel.frame.size.height/2;
+	animatedLabel.frame = r3;
+
+	if(growth > 0) {
+		animatedLabel.text = [NSString stringWithFormat:@"+%d", growth];
+	}else{
+		if( growth < 0)
+			animatedLabel.text = [NSString stringWithFormat:@"%d", growth];
+		else
+			animatedLabel.text = @"+0";
 	}
-
-	c = 0; //add score labels, non animating yet
-	for(myGraphView * view in staticLabels) {
-		CGRect f = ((UIView *)[bars objectAtIndex:c]).frame;
-		int scoreChange = [[scores objectAtIndex:c] intValue];
-		int labelBarPadding = 5;
-		if(scoreChange >= 0) {
-			f.origin.x = f.origin.x + f.size.width + labelBarPadding;
-		}else{
-			f.origin.x = f.origin.x - labelBarPadding - 10; //TODO
-		}
-		UILabel * lab = [[UILabel alloc] initWithFrame:f];
-		if(scoreChange > 0) {
-			lab.text = [NSString stringWithFormat:@"+%d", scoreChange];
-		}else{
-			lab.text = [NSString stringWithFormat:@"%d", scoreChange];
-		}
-
-		lab.backgroundColor = [UIColor clearColor];
-		lab.font = [UIFont fontWithName:@"Capita-Light" size:13];
-		lab.opaque = false;
-		lab.alpha = 0;
-		lab.textColor = [UIColor whiteColor];
-		[graphics addSubview:lab];
-		[animatedLabels addObject:lab];
-		c++;
-	}
+	animatedLabel.alpha = 0;
+	//staticLabel.alpha = 0;
+	//bar.alpha = 0;
+}
 
 
-	c = 0; //delayed anim of the bars
-	for(myGraphView * view in bars) {
+-(void)startGraphAnimation {
+	[self resetGraphState];
 
-		[UIView animateWithDuration: GRAPH_ANIMATION_DURATION
-							  delay: c * GRAPH_ANIMATION_DURATION
-							options: UIViewAnimationOptionCurveEaseOut
-						 animations:^{
-							 CGRect r = view.frame;
-							 int growth = 10 * [[scores objectAtIndex:c] integerValue];
-							 [scores addObject:[NSNumber numberWithInt:growth]];
-							 if(growth > 0) {
-								 r.size.width += growth;
-							 }else{
-								 r.origin.x -= fabs(growth);
-								 r.size.width += fabs(growth);
-							 }
-							 [view setFrame:r];
-							 view.alpha = 1;
+	//this calls itself as many times as there are tokens, to show them one after each other
+	[self performSelector:@selector(driveGraphAnimation) withObject:nil afterDelay:0.25]; //a bit of a rest before we start the anim, too hectic otherwise
+}
+
+
+-(void)driveGraphAnimation {
+
+	[UIView animateWithDuration: EACH_TOKEN_GRAPH_DURATION
+						  delay: 0
+						options: UIViewAnimationOptionCurveEaseOut
+					 animations:^{
+
+						 graphics.alpha = 1;
+						 //rise OR drop the bar
+						 CGRect r = bar.frame;
+						 int growth = 10 * [[scores objectAtIndex:currentToken] integerValue];
+						 if(growth > 0) {
+							 r.size.height -= growth;
+						 }else{
+							 r.origin.y += fabs(growth);
+							 r.size.height -= fabs(growth);
 						 }
+						 bar.frame = r;
+						 bar.alpha = 1;
+
+						 //show and move the label withthe token score
+						 r = animatedLabel.frame;
+						 r.origin.y -= growth;
+						 if ( growth == 0 ) r.origin.y -= 10;
+						 animatedLabel.frame = r;
+						 animatedLabel.alpha = 1;
+
+						 //show static label?
+						 staticLabel.alpha = 1;
+					 }
+
+					 completion:^(BOOL finished){
+
+						 currentToken++;
+						 //if another token anim avialble, flip the graphics view
+						 if (currentToken < [[AppData get] numTokens]) {
 
 
-						 completion:^(BOOL finished){
-
-							//update the score for all tokens
-							 UILabel * lab = [staticLabels objectAtIndex:c];
-							 [UIView transitionWithView:lab
-											   duration:GRAPH_ANIMATION_DURATION
-												options:UIViewAnimationOptionTransitionFlipFromTop
+							 [UIView transitionWithView:graphics
+											   duration:FLIP_ANIMATION_DURATION
+												options:UIViewAnimationOptionTransitionFlipFromLeft
 											 animations: ^{
-												 if(tokenScores[c] > 0) {
-													 lab.text = [NSString stringWithFormat:@"%@: +%d", [[AppData get] tokenAtIndex: c], tokenScores[c]];
-												 }else{
-													 lab.text = [NSString stringWithFormat:@"%@: %d", [[AppData get] tokenAtIndex: c], tokenScores[c]];
-												 }
+												 [self resetGraphState];
+												 [bar removeFromSuperview];                                                                //unless we remove to add later (completion^), weird things happen during the flip
+												 [animatedLabel removeFromSuperview];
 											 }
-											 completion:^(BOOL finished){}
+
+											 completion:^(BOOL finished){
+												 //[self resetGraphState];
+												 [self performSelector:@selector(driveGraphAnimation) withObject:nil afterDelay:0.0];
+												 [graphics addSubview:bar];
+												 [graphics addSubview:animatedLabel];
+											 }
+
 							  ];
-
-						 }
-
-
-		 ];
-		c++;
-	}
-
-	c = 0;
-	UILabel * lastView = [animatedLabels lastObject];
-	for(UILabel * label in animatedLabels) {
-
-		//delayed animation of score labels
-		[UIView animateWithDuration: GRAPH_ANIMATION_DURATION
-							  delay: c * GRAPH_ANIMATION_DURATION
-							options: UIViewAnimationOptionCurveEaseOut
-						 animations:^{
-							 int grow = [[scores objectAtIndex:c] integerValue];
-							 CGRect r = label.frame;
-							 r.origin.x += 10 * grow;
-							 [label setFrame:r];
-							 label.alpha = 1;
-							 if(grow > 0) {
-								 label.text = [NSString stringWithFormat:@"+%d", grow];
-							 }else{
-								 label.text = [NSString stringWithFormat:@"%d", grow];
-							 }
-						 }
-
-
-						 completion:^(BOOL finished){
-
-							 [UIView animateWithDuration:GRAPH_ANIMATION_DURATION
-												   delay: 0.0
-												 options: UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionCurveEaseOut
+							 
+						 }else{
+							 
+							 //done with token anims, hide graphs
+							 [UIView animateWithDuration: GRAPH_ANIMATION_DURATION
+												   delay: 0
+												 options: UIViewAnimationOptionCurveEaseOut
 											  animations:^{
-												  label.alpha = 0;
+												  graphics.alpha = 0;
 											  }
 
 
 											  completion:^(BOOL finished){
+												  [self performSelector:@selector(showQuestion) withObject:nil afterDelay:0.0];
+											  }
 
-												  //remove temp label from superview
-												  [label removeFromSuperview];
-												  [label release];
-												  if(label == lastView) { //we finally show the next question
-													  [animatedLabels removeAllObjects];
-													  [self performSelector:@selector(showQuestion) withObject:nil afterDelay:0.0];
-												  }
 
-											  }];
-
-						 }];
-		c++;
-	}
-
+							  ];
+							 currentToken = 0; // reset the token counter for the next question
+						 }
+					 }
+	 ];
 }
 
 

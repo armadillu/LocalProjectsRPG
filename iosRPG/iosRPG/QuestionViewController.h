@@ -14,6 +14,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "Constants.h"
 #import "myGraphView.h"
+#import "ResultsViewController.h"
 
 //////////////////////////////////////////////////
 // define protocol for delegate
@@ -28,7 +29,7 @@
 //////////////////////////////////////////////////
 // actual class definition
 //////////////////////////////////////////////////
-@interface QuestionViewController : UIViewController {
+@interface QuestionViewController : UIViewController <ResultsViewControllerDelegate>{
 
 	IBOutlet UITextView * question;
 	IBOutlet UIButton * yesButton;
@@ -37,12 +38,16 @@
 	IBOutlet UIView * graphics;
 
 	BOOL roundOver;
-	NSMutableArray * bars;
-	NSMutableArray * staticLabels;
-	NSMutableArray * animatedLabels;
+
+	myGraphView * bar;
+	UILabel * staticLabel;
+	UILabel * animatedLabel;
+	int currentToken; //this drives the tokens animation
+
 	NSArray * colors;
 	bool animating;
-	int * tokenScores;
+	int * tokenScores; // global scores for this game
+	NSMutableArray * scores;//scores for this question
 
 	bool pressedYes;
 	bool firstTime;
@@ -53,7 +58,8 @@
 
 @property (assign, nonatomic) id <QuestionViewControllerDelegate>       delegate;
 
-
+-(NSArray*)getColors;
+-(int*)getScores;
 - (IBAction)pressedYES:(id)sender;
 - (IBAction)pressedNO:(id)sender;
 

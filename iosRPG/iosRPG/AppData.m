@@ -32,6 +32,7 @@ static AppData * appdataSingleton = nil;
 	startSound = [[AVAudioPlayer alloc] initWithContentsOfURL:musicFile error:nil];
 	[startSound prepareToPlay];
 
+	srand (time(NULL));
 	questions = nil;
 	return self;
 }
@@ -72,8 +73,17 @@ static AppData * appdataSingleton = nil;
 		return;
 	}
 
+
 	NSLog(@"%@", jsonObj);
 	if ([jsonObj isKindOfClass:[NSArray class]]){ // got a NSArray
+
+		if ([jsonObj count] == 0){
+			NSLog(@"error: %@", [error userInfo]);
+			[delegate performSelectorOnMainThread:@selector(noDataSoNoGame:) withObject:@"Backend has no questions.\nDB is Empty." waitUntilDone:NO];
+			questions = nil;
+			return;
+		}
+
 
 		if (questions != nil){ //make space for new set of questions
 			[questions removeAllObjects];
@@ -97,12 +107,12 @@ static AppData * appdataSingleton = nil;
 -(NSString *)tokenAtIndex:(int)i {
 
 	NSArray * tokens = [NSArray arrayWithObjects :
-						@"income tax",
-						@"education level",
-						@"public health",
-						@"entrepreneurship",
-						@"community art",
-						@"immigration",
+						@"Income Tax",
+						@"Education Level",
+						@"Public Health",
+						@"Entrepreneurship",
+						@"Community Art",
+						@"Immigration",
 						nil
 						];
 
@@ -154,7 +164,6 @@ static AppData * appdataSingleton = nil;
 -(int)numTokens {
 	return 5;
 }
-
 
 -(int)scoreForToken:(int)token {
 	return rand() % 10 - 5;

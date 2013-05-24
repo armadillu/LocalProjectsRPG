@@ -13,6 +13,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "AppData.h"
 #import "UIBAlertView.h"
+#import "ResultsViewController.h"
 
 
 @interface MainViewController : UIViewController

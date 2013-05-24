@@ -15,7 +15,7 @@
     self = [super initWithFrame:frame];
     if (self) {
 		self.layer.masksToBounds = true;
-		self.layer.cornerRadius = 4;
+		self.layer.cornerRadius = 3;
 		self.layer.contents = (id)[[UIImage imageNamed:@"gradient.png"] CGImage];
 
 //		gradientLayer = [CAGradientLayer layer];
