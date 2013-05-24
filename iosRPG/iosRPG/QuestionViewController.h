@@ -43,13 +43,17 @@
 	NSArray * colors;
 	bool animating;
 	int * tokenScores;
+
+	bool pressedYes;
+	bool firstTime;
 	CGRect originalQuestionFrame;
+	CGRect originalYesFrame;
+	CGRect originalNoFrame;
 }
 
 @property (assign, nonatomic) id <QuestionViewControllerDelegate>       delegate;
 
 
-- (IBAction)pressedDone:(id)sender;
 - (IBAction)pressedYES:(id)sender;
 - (IBAction)pressedNO:(id)sender;
 

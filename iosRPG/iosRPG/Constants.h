@@ -19,7 +19,9 @@
 #define QUESTION_SLIDE_DISTANCE				100
 #define ROUND_OVER_MSG_DURATION				1.0
 
-#define INITIAL_GRAPH_BAR_W						130
+#define INITIAL_GRAPH_BAR_W					130
+#define SCREEN_EDGE							40
+#define FRA_ELEMENT_GAP						30
 
 #define DegreesToRadians(x)					((x) * M_PI / 180.0)
 

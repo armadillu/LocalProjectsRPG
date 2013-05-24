@@ -33,14 +33,38 @@
 
 		NSLog(@"initWithNibName");
 	}
+	firstTime = true;
 	return self;
 }
 
 
 - (void)viewWillAppear:(BOOL)animated {
 
-	originalQuestionFrame = question.frame;
-	
+	if (firstTime){
+		originalQuestionFrame = question.frame;
+		originalYesFrame = yesButton.frame;
+		originalNoFrame = noButton.frame;
+
+		UIFont * bigTitle = [UIFont fontWithName:@"Capita-Light" size:30];
+		UIFont * smallFont = [UIFont fontWithName:@"Capita-Light" size:28];
+		[question setFont:bigTitle];
+
+		[yesButton.titleLabel setFont:smallFont];
+		[noButton.titleLabel setFont:smallFont];
+
+		[yesButton setTitleEdgeInsets:UIEdgeInsetsMake(0.0, 0.0, 5.0, 0.0)];
+		[noButton setTitleEdgeInsets:UIEdgeInsetsMake(0.0, 0.0, 5.0, 0.0)];
+
+		[yesButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+		[noButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+
+		[yesButton setBackgroundImage:[UIImage imageNamed:@"yesButton"] forState:UIControlStateNormal];
+		[noButton setBackgroundImage:[UIImage imageNamed:@"noButton"] forState:UIControlStateNormal];
+
+	}else{
+		firstTime = false;
+	}
+
 	//reset scores
 	int n = [[AppData get] numTokens];
 	tokenScores = (int *)malloc(sizeof(int) * n);
@@ -49,22 +73,6 @@
 	}
 
 	[self setupGraphs];
-
-	UIFont * bigTitle = [UIFont fontWithName:@"Capita-Light" size:30];
-	UIFont * smallFont = [UIFont fontWithName:@"Capita-Light" size:28];
-	[question setFont:bigTitle];
-
-	[yesButton.titleLabel setFont:smallFont];
-	[noButton.titleLabel setFont:smallFont];
-
-	[yesButton setTitleEdgeInsets:UIEdgeInsetsMake(0.0, 0.0, 5.0, 0.0)];
-	[noButton setTitleEdgeInsets:UIEdgeInsetsMake(0.0, 0.0, 5.0, 0.0)];
-
-	[yesButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-	[noButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-
-	[yesButton setBackgroundImage:[UIImage imageNamed:@"yesButton"] forState:UIControlStateNormal];
-	[noButton setBackgroundImage:[UIImage imageNamed:@"noButton"] forState:UIControlStateNormal];
 
 	NSString * firstQuestion = [[AppData get] nextQuestion];
 	if(firstQuestion) {
@@ -77,10 +85,7 @@
 }
 
 - (void)viewDidDisappear:(BOOL)animated;{
-
-	question.frame = originalQuestionFrame;
 	[self cleanUpStructures];
-	
 }
 
 
@@ -100,11 +105,9 @@
 }
 
 
-
-
 - (void)setupGraphs {
 
-	int y = 20; //starting y for graphs
+	int y = 0; //starting y for graphs
 	int h = 16; // each bar graph height
 	int spacing = 5; //spacing betwen bars
 	int initialBarW = INITIAL_GRAPH_BAR_W; //
@@ -145,8 +148,10 @@
 
 - (IBAction)pressedYES:(id)sender {
 	if(!animating) {
+		pressedYes = YES;
 		((UIButton *)sender).highlighted = NO;
 		[[AppData get] PlayYesButtonSound];
+		[self makeSpaceForGraphs];
 		[self updateGraph];
 	}
 }
@@ -154,8 +159,10 @@
 
 - (IBAction)pressedNO:(id)sender {
 	if(!animating) {
+		pressedYes = NO;
 		((UIButton *)sender).highlighted = NO;
 		[[AppData get] PlayNoButtonSound];
+		[self makeSpaceForGraphs];
 		[self updateGraph];
 	}
 }
@@ -194,11 +201,14 @@
 -(void)showQuestion {
 
 
-	//set plot bars to initial state
+	//set plot bars to initial state, clean up graphs and buttons
 	[UIView animateWithDuration: GRAPH_ANIMATION_DURATION
 						  delay: 0
 						options: UIViewAnimationOptionCurveEaseOut
 					 animations:^{
+						 graphics.alpha = 0;
+						 yesButton.alpha = 0;
+						 noButton.alpha = 0;
 						 [self resetAllGraphBars];
 					 }
 					 completion:^(BOOL finished){}
@@ -209,16 +219,17 @@
 
 	[UIView transitionWithView:question
 					  duration:FLIP_ANIMATION_DURATION
-					   options:UIViewAnimationOptionTransitionFlipFromRight | UIViewAnimationOptionAllowUserInteraction
+					   options:UIViewAnimationOptionTransitionFlipFromTop | UIViewAnimationOptionAllowUserInteraction
 					animations: ^{
 						//[self layoutQuestion: [[AppData get] nextQuestion]];
 					}
 
 					completion:^(BOOL finished){
 
-
 						if(roundOver==false) {
 							//question is over, next question is up, let's show the YES/NO buttons again
+							yesButton.frame = originalYesFrame;
+							noButton.frame = originalNoFrame;
 							[UIView beginAnimations:nil context:nil];
 							[UIView setAnimationDuration:FADE_ANIMATION_DURATION];
 							yesButton.alpha = 1;
@@ -232,6 +243,7 @@
 							[UIView setAnimationDidStopSelector:@selector(buttonAnimEnded:finished:context:)];
 							[UIView commitAnimations];
 						}else{
+							//end of game, good bye!
 							[UIView beginAnimations:nil context:nil];
 							[UIView setAnimationDuration:FADE_ANIMATION_DURATION];
 							[UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
@@ -243,22 +255,49 @@
 }
 
 
-
 -(void)buttonAnimEnded:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
 	animating = false;
 }
 
 
-- (IBAction)pressedDone:(id)sender {
-	[self.delegate questionViewControllerDidFinish:self];
-}
+-(void)makeSpaceForGraphs{
 
+	animating = true;
+
+	// move question to top
+	[UIView beginAnimations:nil context:nil];
+	[UIView setAnimationDuration:FADE_ANIMATION_DURATION];
+	CGRect questionRect = question.frame;
+	questionRect.origin.y = SCREEN_EDGE;
+	question.frame = questionRect;
+
+	// hide and moving yes / no button accordingly
+	CGRect buttonRect = yesButton.frame;
+	buttonRect.origin.y = SCREEN_EDGE + questionRect.size.height + FRA_ELEMENT_GAP;
+	buttonRect.origin.x = wrapper.frame.size.width/2 - yesButton.frame.size.width/2;
+
+	if (pressedYes){ //focus on YES
+		yesButton.alpha = 1;
+		noButton.alpha = 0;
+		yesButton.frame = buttonRect;
+	}else{ // focus on NO
+		yesButton.alpha = 0;
+		noButton.alpha = 1;
+		noButton.frame = buttonRect;
+	}
+	graphics.alpha = 1;
+	CGRect graphsRect = graphics.frame;
+	graphsRect.origin.y = buttonRect.origin.y + buttonRect.size.height + FRA_ELEMENT_GAP; //starting y for graphs
+	graphics.frame = graphsRect;
+	[UIView commitAnimations];
+
+}
 
 
 -(void)updateGraph {
 
 	int c = 0;
-	animating = true;
+
 	//collect all scores for this round
 	NSMutableArray * scores = [NSMutableArray arrayWithCapacity:5];
 	for(myGraphView * view in staticLabels) {
@@ -389,16 +428,6 @@
 		c++;
 	}
 
-	[UIView beginAnimations:nil context:nil];
-	[UIView setAnimationDuration:FADE_ANIMATION_DURATION];
-	yesButton.alpha = 0;
-	noButton.alpha = 0;
-	graphics.alpha = 1;
-	CGRect f = question.frame;
-	//f.origin.y += QUESTION_SLIDE_DISTANCE;
-	f.size.height += QUESTION_SLIDE_DISTANCE;
-	//question.frame = f;
-	[UIView commitAnimations];
 }
 
 
