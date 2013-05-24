@@ -30,7 +30,7 @@
 //////////////////////////////////////////////////
 @interface QuestionViewController : UIViewController {
 
-	IBOutlet UILabel * question;
+	IBOutlet UITextView * question;
 	IBOutlet UIButton * yesButton;
 	IBOutlet UIButton * noButton;
 	IBOutlet UIView * wrapper;
@@ -43,6 +43,7 @@
 	NSArray * colors;
 	bool animating;
 	int * tokenScores;
+	CGRect originalQuestionFrame;
 }
 
 @property (assign, nonatomic) id <QuestionViewControllerDelegate>       delegate;

@@ -12,6 +12,7 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <QuartzCore/QuartzCore.h>
 #import "AppData.h"
+#import "UIBAlertView.h"
 
 
 @interface MainViewController : UIViewController
@@ -19,6 +20,7 @@
 
 	IBOutlet UIButton * startButton;
 	IBOutlet UILabel * titleLabel;
+	IBOutlet UIActivityIndicatorView * activity;
 }
 
 - (IBAction)showInfo:(id)sender;

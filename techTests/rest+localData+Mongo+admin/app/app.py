@@ -6,10 +6,10 @@ app = Flask(__name__)
 api = Api(app)
 
 QUESTIONS = [
-	{"questionID" : "question1","question" : "what are monkeys?"},
-	{"questionID" : "question2","question" : "what are bananas?"},
-	{"questionID" : "question3","question" : "what are we doing here?"}
-]
+			 {"questionID" : "question1","question" : "what are monkeys?"},
+			 {"questionID" : "question2","question" : "what are bananas?"},
+			 {"questionID" : "question3","question" : "what are we doing here?"}
+			 ]
 
 #to parse incoming data fields
 parser = reqparse.RequestParser()
@@ -26,7 +26,6 @@ def initDB():
 	for row in QUESTIONS:
 		print "inserting into QUESTIONS DB: " + str(row)
 		questionsCol.insert(row);
-
 
 ## CHECKS ###############################################################
 
@@ -48,7 +47,7 @@ def removeFromQuestions(questionID):
 	print "about to delete Question " + str(res)
 	for r in res:
 		questionsCol.remove( {"questionID":questionID} )
-	
+
 def allQuestions():
 	cursor = questionsCol.find( {},{'questionID':1, 'question':1, "_id":0 } )
 	results = []
@@ -58,38 +57,46 @@ def allQuestions():
 
 def addQuestion(questionText):
 	numQuestions = questionsCol.count();
-	questionID = 'question' + str( numQuestions + 1); #TODO check for dup!
+	inc = 1;
+	while( True ): #this is my ghetto way of making sure new questionID's are unique
+		questionID = 'question' + str( numQuestions + inc);
+		inc += 1;
+		if (len(dataForQuestionID(questionID)) == 0):
+			break;
 	newQ = 	{
-				'question' : questionText,
-				'questionID' : questionID
-			}
+		'question' : questionText,
+		'questionID' : questionID
+		}
 	print( "adding new Question: " + str(newQ) )
 	questionsCol.insert(newQ)
 	return questionID;
 
 def updateQuestion(questionText, questionID):
 	newQ = 	{
-				'question' : questionText,
-				'questionID' : questionID
-			}
+		'question' : questionText,
+		'questionID' : questionID
+		}
 	print( "updating Question: " + str(newQ) )
 	removeFromQuestions(questionID);
 	questionsCol.insert(newQ)
 
-	
+
 ## QUESTIONS ###############################################################
 
 class Question(Resource):
 	def get(self, questionID): 								#get a question by its ID
+		print "   get question"
 		abortIfQuestionDoesNotExist(questionID)
 		return dataForQuestionID(questionID)
 
 	def delete(self, questionID): 							#delete a question by its ID
+		print "   delete question"
 		abortIfQuestionDoesNotExist(questionID)
 		removeFromQuestions(questionID)
 		return '', 204
 
 	def post(self, questionID): 							#update a particular question by its ID
+		print "   Update question"
 		abortIfQuestionDoesNotExist(questionID)
 		args = parser.parse_args()
 		updateQuestion(args['question'], questionID)
@@ -97,9 +104,11 @@ class Question(Resource):
 
 class QuestionsList(Resource):
     def get(self):											#get all questions
-        return allQuestions()
+		print "   fetch all questions"
+		return allQuestions()
 
     def post(self): 										#add a new question
+		print "   Add question"
 		args = parser.parse_args()
 		question = args['question'];
 		qID = addQuestion(question)
@@ -118,13 +127,30 @@ def admin():
 	return render_template('admin.html')
 
 
+@app.before_request
+def before_request():
+	#print("before request " + str(request.endpoint) )
+	if(request.endpoint == "questionslist" or request.endpoint == "question"):
+		print "\n\n>> connect db >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+		db = client["localProjectsTest"]
+		questionsCol = db['questions'];
+
+
+@app.teardown_request
+def teardown_request(exception):
+	#print("after request ") + str(request.endpoint);
+	if(request.endpoint == "questionslist" or request.endpoint == "question"):
+		print ">> disconnect db >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n\n"
+		client.disconnect()
+
+
 ## setup the API #########################################################
 
 api.add_resource(QuestionsList, '/questions')
 api.add_resource(Question, '/questions/<string:questionID>')
-initDB() #start with a clean DB 
+#initDB() #start with a clean DB
 
 print "\n\n\n\n\n\n"
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)

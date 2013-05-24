@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVAudioPlayer.h>
+#import "Wrapper.h"
+#include "Constants.h"
 
 @interface AppData : NSObject{
 
@@ -15,9 +17,12 @@
 	AVAudioPlayer * yesSound;
 	AVAudioPlayer * noSound;
 	AVAudioPlayer * startSound;
+	NSMutableArray * questions;
 }
 
 + (AppData*) get;
+
+-(void)fetchQuestions:(id)delegate;
 
 -(void)startGame;
 -(NSString*) nextQuestion;

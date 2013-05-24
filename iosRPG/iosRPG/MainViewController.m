@@ -23,6 +23,7 @@
 	[startButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 	[startButton setBackgroundImage:[UIImage imageNamed:@"startButton"] forState:UIControlStateNormal];
 	[titleLabel setFont:bigTitle];
+	[activity stopAnimating];
 }
 
 
@@ -38,16 +39,36 @@
 }
 
 
-
-- (IBAction)startQuestions:(id)sender{
-	[[AppData get] PlayStartButtonSound];
-	[[AppData get] startGame];
+-(void)showQuestionsController{
 	QuestionViewController *controller = [[[QuestionViewController alloc] initWithNibName:@"QuestionViewController" bundle:nil] autorelease];
 	controller.delegate = self;
 	controller.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
 	[self presentViewController:controller animated:YES completion:nil];
 }
 
+- (IBAction)startQuestions:(id)sender{
+//	NSString * web = [[NSString alloc] initWithContentsOfURL:[NSURL URLWithString:@"http://uri.cat"] encoding:nil error:nil];
+//	NSLog(@"web: %@",web);
+	[[AppData get] PlayStartButtonSound];
+	[activity startAnimating];
+	[[AppData get] performSelectorInBackground:@selector(fetchQuestions:) withObject:self];
+}
+
+
+-(void)gotDataSoStartGame{
+	[activity stopAnimating];
+	[[AppData get] startGame];
+	[self showQuestionsController];
+}
+
+-(void)noDataSoNoGame:(NSString*)why{
+	[activity stopAnimating];
+    UIBAlertView *alert = [[UIBAlertView alloc] initWithTitle:@"Can't Obtain Fresh Questions!" message:[NSString stringWithFormat:@"%@\n\nThe game will use predefined questions instead. Sorry!", why] cancelButtonTitle:@"damn!" otherButtonTitles:nil];
+    [alert showWithDismissHandler:^(NSInteger selectedIndex, BOOL didCancel) {
+		[self showQuestionsController];
+	}];
+
+}
 
 - (IBAction)showInfo:(id)sender{
 	FlipsideViewController *controller = [[[FlipsideViewController alloc] initWithNibName:@"FlipsideViewController" bundle:nil] autorelease];
